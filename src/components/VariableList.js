@@ -6,7 +6,6 @@ export const VariableList = ({props,handleChange}) => {
     const database = useContext(DatabaseContext)
 
     const [variables, setVariables] = useState([])
-    const [value, setValue] = useState({})
 
     const getAllVar = () => {
         setVariables(database.variables)

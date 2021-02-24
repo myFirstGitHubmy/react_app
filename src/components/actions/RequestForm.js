@@ -3,32 +3,30 @@ import {Alert} from "../Alert";
 import {AlertContext} from "../../context/alert/alertContext";
 import {DatabaseContext} from "../../context/database/databaseContext";
 
-export const RequestForm = () => {
+export const RequestForm = ({saveVar,onClick}) => {
     const [value, setValue] = useState('')
     const alert = useContext(AlertContext)
     const database = useContext(DatabaseContext)
-    const [variables, setVariables] = useState([])
-    const [comm, setComm] = useState(database.commands)
 
-    const saveVariable = event => {
+    const saveVariable = () => {
        if (value.trim()){
-           try {
                const com = {
                    name: 'Запросить '+ value,
                    ident: 'REQ'
                }
                database.addCommands(com)
-               setComm(database.commands)
-                console.log('comm id: '+database.commands)
-               database.fetchVariable({id: comm.variables[0].id, name: value, value: null,comm: comm.id}).then(
-                   res => setVariables({res}),
-                   alert.show('Переменная ' + value + ' создана', 'success')
-               ).catch(err=> alert.show('Что-то пошло не так ('+<span>{err.message}</span>+')', 'danger'))
-
-               setValue('')
-           }catch (e){
-               alert.show('Что-то пошло не так ('+<span>{e.message}</span>+')','danger')
+                   .catch(err => console.log(err.message))
+               const varObject = {name: value, value: null}
+           try{
+               database.addVariable(varObject)
+                   .catch(err => {console.log(err.message)})
+               alert.show('Переменная ' + value + ' создана', 'success')
+           }catch (error){
+               console.log(error.message)
+               alert.show('Что-то пошло не так', 'danger')
            }
+               saveVar(varObject)
+               setValue('')
        }else{
            alert.show('Введите название переменной')
        }
@@ -36,7 +34,7 @@ export const RequestForm = () => {
 
     return (
         <div>
-            <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            <button type="button" onClick={onClick} className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                 Запросить
             </button>
             <div className="modal fade" id="exampleModalLong" tabIndex="-1" role="dialog"

@@ -5,44 +5,38 @@ import {DatabaseContext} from "./databaseContext";
 import {ADD_COMM, ADD_VAR, FETCH_VAR} from "../types";
 
 export const DatabaseState = ({children}) => {
-    const initialState = {variables: []}
-    const initialStateCommands = {commands: []}
+    const initialState = {variables: [],commands: [{}]}
 
     const [state, dispatch] = useReducer(databaseReducer, initialState)
-    const [stateCommand, dispatchCommand] = useReducer(databaseReducer, initialStateCommands)
 
 
     const addVariable = async (variable) => {
-        console.log(variable.comm)
         try{
-            const result = await axios.post('http://localhost:8080/api/add_var', variable).then(result => console.log(result)).catch(e => console.log(e.message))
+            const result = await axios.post('http://localhost:8080/api/add_var', variable)
             const payload = Object.keys(result.data).map(key => {
-                console.log('key: '+ key)
                 return {
                     ...result.data[key],
                     id: key
                 }
-            }
-            )
-            console.log(state.commands)
+            })
             dispatch({type:ADD_VAR, payload})
+            console.log('addVar')
         }catch (e){
             throw new Error(e.message)
         }
     }
 
-    const fetchVariable = async (variable) => {
-        const variableObj = await axios.post('http://localhost:8080/api/update/var',variable).then(e => console.log(e)).catch(err=> console.log(err))
-        console.log(variableObj)
-        const payload = Object.keys(variableObj.data).map(key => {
-            return {
-                ...variableObj.data[key],
-                id: key
-            }
-        })
-        dispatch({type: FETCH_VAR, payload})
-
-    }
+    // const fetchVariable = async (variable) => {
+    //     const variableObj = await axios.post('http://localhost:8080/api/update/var',variable).then(e => console.log(e)).catch(err=> console.log(err))
+    //     const payload = Object.keys(variableObj.data).map(key => {
+    //         return {
+    //             ...variableObj.data[key],
+    //             id: key
+    //         }
+    //     })
+    //     dispatch({type: FETCH_VAR, payload})
+    //
+    // }
 
     const fetchVariables = async () => {
         const variables = await axios.get('http://localhost:8080/api/allVars')
@@ -72,7 +66,7 @@ export const DatabaseState = ({children}) => {
                     ...resComm.data[key]
                 }
             })
-            dispatchCommand({type: ADD_COMM, payload})
+            dispatch({type: ADD_COMM, payload})
 
         }catch (e){
             throw new Error(e.message)
@@ -81,9 +75,9 @@ export const DatabaseState = ({children}) => {
 
     return (
         <DatabaseContext.Provider value={{
-            addVariable,fetchVariable,addCommands,
+            addVariable,fetchVariables,addCommands,
             variables: state.variables,
-            commands: stateCommand.commands
+            commands: state.commands
         }}
         >
             {children}
