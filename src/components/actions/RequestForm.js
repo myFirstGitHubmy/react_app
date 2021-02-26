@@ -3,7 +3,7 @@ import {Alert} from "../Alert";
 import {AlertContext} from "../../context/alert/alertContext";
 import {DatabaseContext} from "../../context/database/databaseContext";
 
-export const RequestForm = ({saveVar,onClick}) => {
+export const RequestForm = ({saveVar,onClick,saveCommand}) => {
     const [value, setValue] = useState('')
     const alert = useContext(AlertContext)
     const database = useContext(DatabaseContext)
@@ -14,18 +14,21 @@ export const RequestForm = ({saveVar,onClick}) => {
                    name: 'Запросить '+ value,
                    ident: 'REQ'
                }
-               database.addCommands(com)
-                   .catch(err => console.log(err.message))
+               // database.addCommands(com)
+               //     .catch(err => console.log(err.message))
+                saveCommand(com)
                const varObject = {name: value, value: null}
-           try{
-               database.addVariable(varObject)
-                   .catch(err => {console.log(err.message)})
+           // try{
+           //     database.addVariable(varObject)
+           //         .catch(err => {console.log(err.message)})
                alert.show('Переменная ' + value + ' создана', 'success')
-           }catch (error){
-               console.log(error.message)
-               alert.show('Что-то пошло не так', 'danger')
-           }
+           // }catch (error){
+           //     console.log(error.message)
+           //     alert.show('Что-то пошло не так', 'danger')
+           // }
                saveVar(varObject)
+           // database.fetchCommands()
+           //     .catch(err => console.log(err.message))
                setValue('')
        }else{
            alert.show('Введите название переменной')

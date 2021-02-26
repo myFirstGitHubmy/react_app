@@ -2,7 +2,7 @@ import React, {useReducer} from "react";
 import {databaseReducer} from "./databaseReducer";
 import axios from "axios";
 import {DatabaseContext} from "./databaseContext";
-import {ADD_COMM, ADD_VAR, FETCH_VAR} from "../types";
+import {ADD_COMM, ADD_VAR, FETCH_COMM, FETCH_VAR} from "../types";
 
 export const DatabaseState = ({children}) => {
     const initialState = {variables: [],commands: [{}]}
@@ -37,6 +37,18 @@ export const DatabaseState = ({children}) => {
     //     dispatch({type: FETCH_VAR, payload})
     //
     // }
+
+    const fetchCommands = async () => {
+        const result = await axios.get('http://localhost:8080/api/allCommands')
+        console.log(result)
+        const payload = Object.keys(result.data).map(key => {
+            return {
+                ...result.data[key],
+                id:key
+            }
+        })
+        dispatch({type: FETCH_COMM, payload})
+    }
 
     const fetchVariables = async () => {
         const variables = await axios.get('http://localhost:8080/api/allVars')
@@ -75,7 +87,7 @@ export const DatabaseState = ({children}) => {
 
     return (
         <DatabaseContext.Provider value={{
-            addVariable,fetchVariables,addCommands,
+            addVariable,fetchVariables,addCommands,fetchCommands,
             variables: state.variables,
             commands: state.commands
         }}
