@@ -14,21 +14,22 @@ export const RequestForm = ({saveVar,onClick,saveCommand}) => {
                    name: 'Запросить '+ value,
                    ident: 'REQ'
                }
-               // database.addCommands(com)
-               //     .catch(err => console.log(err.message))
+               database.addCommands(com)
+                   .catch(err => console.log(err.message))
                 saveCommand(com)
+                database.fetchCommands()
                const varObject = {name: value, value: null}
-           // try{
-           //     database.addVariable(varObject)
-           //         .catch(err => {console.log(err.message)})
+           try{
+               database.addVariable(varObject)
+                   .catch(err => {console.log(err.message)})
+               database.fetchVariables()
+               database.fetchVariables()
                alert.show('Переменная ' + value + ' создана', 'success')
-           // }catch (error){
-           //     console.log(error.message)
-           //     alert.show('Что-то пошло не так', 'danger')
-           // }
-               saveVar(varObject)
-           // database.fetchCommands()
-           //     .catch(err => console.log(err.message))
+           }catch (error){
+               alert.show('Что-то пошло не так', 'danger')
+           }
+
+
                setValue('')
        }else{
            alert.show('Введите название переменной')
@@ -51,7 +52,6 @@ export const RequestForm = ({saveVar,onClick,saveCommand}) => {
                             </button>
                         </div>
                             <div className="container">
-                                <Alert/>
                                 <div className="modal-body">
                                     <input
                                         type="text"
@@ -65,7 +65,7 @@ export const RequestForm = ({saveVar,onClick,saveCommand}) => {
 
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={() => setValue('')} data-dismiss="modal">Отмена</button>
-                            <button type="button" className="btn btn-primary" onClick={saveVariable}>Сохранить</button>
+                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={saveVariable}>Сохранить</button>
                         </div>
                     </div>
                 </div>

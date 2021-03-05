@@ -19,3 +19,8 @@ code {
   justify-content: flex-start;
   align-items: flex-start;
 }
+
+.item {
+  display: flex;
+  justify-content: space-between;
+}

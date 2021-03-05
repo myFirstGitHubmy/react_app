@@ -40,7 +40,6 @@ export const DatabaseState = ({children}) => {
 
     const fetchCommands = async () => {
         const result = await axios.get('http://localhost:8080/api/allCommands')
-        console.log(result)
         const payload = Object.keys(result.data).map(key => {
             return {
                 ...result.data[key],
@@ -55,8 +54,20 @@ export const DatabaseState = ({children}) => {
 
         const payload = Object.keys(variables.data).map(key => {
             return {
-                ...variables.data[key],
-                id: key
+                ...variables.data[key]
+            }
+        })
+        dispatch({type: FETCH_VAR, payload})
+    }
+
+    const removeVariables = async (id) => {
+        const url = 'http://localhost:8080/api/var/delete/'+id
+            await axios.get(url)
+        const variablesList = await axios.get('http://localhost:8080/api/allVars')
+        const payload = Object.keys(variablesList.data).map(key => {
+            return {
+                ...variablesList.data[key],
+                id: key.id
             }
         })
         dispatch({type: FETCH_VAR, payload})
@@ -87,7 +98,7 @@ export const DatabaseState = ({children}) => {
 
     return (
         <DatabaseContext.Provider value={{
-            addVariable,fetchVariables,addCommands,fetchCommands,
+            addVariable,fetchVariables,addCommands,fetchCommands,removeVariables,
             variables: state.variables,
             commands: state.commands
         }}

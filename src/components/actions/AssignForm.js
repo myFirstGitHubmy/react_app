@@ -11,7 +11,7 @@ export const AssignForm = () => {
     const [status, setStatus] = useState(false)
 
     const saveVariable = () => {
-        database.addVariable(name, value)
+        database.addVariable({name: name, value: value})
         alert.show('Переменная с именем ' + name + ' добавлена','success')
     }
 
@@ -48,7 +48,6 @@ export const AssignForm = () => {
                             </button>
                         </div>
                         <div className="container">
-                            <Alert/>
                             {!status?
                             <div className="modal-body">
                                 <input
@@ -76,7 +75,7 @@ export const AssignForm = () => {
                                 setName('')
                             }} data-dismiss="modal">Отмена</button>
                             <button type="button" className="btn btn-primary" onClick={onToggleChange}>{!status? 'Далее': 'Назад'}</button>
-                            <button type="button" className="btn btn-primary" disabled={!status} data-dismiss={status? "modal":null} onClick={()=> {
+                            <button type="button" className="btn btn-primary" disabled={!status} data-dismiss={`${alert.type = 'success'?"modal":null}`} onClick={()=> {
                                 saveVariable()
                                 clear()
                             }}>Сохранить</button>
