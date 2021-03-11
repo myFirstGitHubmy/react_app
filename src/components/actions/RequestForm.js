@@ -3,7 +3,7 @@ import {Alert} from "../Alert";
 import {AlertContext} from "../../context/alert/alertContext";
 import {DatabaseContext} from "../../context/database/databaseContext";
 
-export const RequestForm = ({saveVar,onClick,saveCommand}) => {
+export const RequestForm = () => {
     const [value, setValue] = useState('')
     const alert = useContext(AlertContext)
     const database = useContext(DatabaseContext)
@@ -16,20 +16,16 @@ export const RequestForm = ({saveVar,onClick,saveCommand}) => {
                }
                database.addCommands(com)
                    .catch(err => console.log(err.message))
-                saveCommand(com)
-                database.fetchCommands()
+               database.fetchCommands()
                const varObject = {name: value, value: null}
            try{
                database.addVariable(varObject)
                    .catch(err => {console.log(err.message)})
                database.fetchVariables()
-               database.fetchVariables()
                alert.show('Переменная ' + value + ' создана', 'success')
            }catch (error){
                alert.show('Что-то пошло не так', 'danger')
            }
-
-
                setValue('')
        }else{
            alert.show('Введите название переменной')
@@ -38,7 +34,7 @@ export const RequestForm = ({saveVar,onClick,saveCommand}) => {
 
     return (
         <div>
-            <button type="button" onClick={onClick} className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                 Запросить
             </button>
             <div className="modal fade" id="exampleModalLong" tabIndex="-1" role="dialog"

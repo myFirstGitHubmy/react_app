@@ -6,57 +6,38 @@ import {DatabaseContext} from "../context/database/databaseContext";
 import {VariableList} from "./VariableList";
 import {AlertContext} from "../context/alert/alertContext";
 import {Alert} from "./Alert";
+import deleteIcon from "../resources/delete-icon.png"
+import {Notes} from "./Notes";
 
 export const Form = () => {
 
-    const databaseState = useContext(DatabaseContext)
+    const {commands,variables,  fetchCommands, removeVariables, fetchVariables} = useContext(DatabaseContext)
     const alert = useContext(AlertContext)
-    const [command, setCommand] = useState(databaseState.commands)
-    const [variables, setVariables] = useState(databaseState.variables)
-
-    const update = () => {
-        alert.hide()
-        databaseState.fetchVariables()
-        console.log(databaseState.variables)
-    }
-
-    const changeCommand = () => {
-        setCommand([...databaseState.commands])
-        console.log(command)
-    }
-
-    const changeVariables = () => {
-        setVariables([...databaseState.variables])
-        console.log(variables)
-    }
-
-    const fetchCommand = () => {
-        databaseState.fetchCommands()
-            .catch(error => console.log(error.message))
-        setCommand(databaseState.commands)
-    }
+    // const fetch = () => {
+    //     fetchCommands
+    //         .catch(err => console.log(err.message))
+    //     fetchVariables
+    //         .catch(err => console.log(err.message))
+    //     console.log(variables)
+    //     setVariables(variables)
+    // }
 
     return (
         <div>
            <div>
-                <VariableList array={variables}/>
+                <VariableList array={variables} onRemove={removeVariables}/>
            </div>
 
             <form>
                 <h1>system command</h1>
                 <Alert />
                 <div className="form-group">
-                    <RequestForm onClick={update} saveVar={changeVariables} saveCommand={changeCommand}/>
+                    <RequestForm/>
                     <AssignForm />
-                    <ReportForm />
+                    <ReportForm array={variables}/>
                     <input type="text"  className="form-control"/>
                 </div>
-                <button type="button" onClick={fetchCommand}>update</button>
-                <div className="form-group">
-                    {command.map(arr => <div key={arr.id}>{
-                        arr.name
-                    }</div>)}
-                </div>
+            <Notes notes={commands}/>
             </form>
         </div>
     )

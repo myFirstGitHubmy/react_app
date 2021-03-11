@@ -1,28 +1,26 @@
 import React, {useContext, useState} from "react";
-import {Alert} from "../Alert";
-import {VariableList} from "../VariableList";
 import {DatabaseContext} from "../../context/database/databaseContext";
+import ReactDom from 'react-dom'
+import {RequestForm} from "./RequestForm";
 
-export const ReportForm = () => {
+export const ReportForm = (props) => {
 
     const database = useContext(DatabaseContext)
-    const [value, setValue] = useState([])
-    const [array, setArray] = useState([])
+    const [selectedOption, setSelectedOption] = useState([])
 
     const saveVariable = () => {
 
     }
 
     const fetch = () => {
-        database.fetchVariable()
-        setArray(database.variables)
+        database.fetchVariables()
         console.log(database.variables)
-
     }
 
     const handleChangeReport = (event) => {
         const val = Array.from(event.target.selectedOptions, option => option.value)
-        setValue(val)
+        setSelectedOption(val)
+        console.log(selectedOption)
     }
 
     return (
@@ -41,14 +39,20 @@ export const ReportForm = () => {
                             </button>
                         </div>
                         <div className="container">
-                            <Alert/>
                             <div className="modal-body">
-                                <VariableList array={array} handleChange={handleChangeReport}/>
+                                <select className="custom-select" onChange={handleChangeReport}>
+                                    {Object.keys(props.array).map(item => <option value={props.array[item].id} key={props.array[item].id}>
+                                            {
+                                                props.array[item].name
+                                            }
+                                        </option>
+                                    )}
+                                </select>
                             </div>
                         </div>
 
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => setValue('')} data-dismiss="modal">Отмена</button>
+                            <button type="button" className="btn btn-secondary" onClick={() => setSelectedOption('')} data-dismiss="modal">Отмена</button>
                             <button type="button" className="btn btn-primary" onClick={saveVariable}>Сохранить</button>
                         </div>
                     </div>
@@ -57,3 +61,8 @@ export const ReportForm = () => {
         </div>
     )
 }
+
+ReactDom.render(
+    RequestForm,
+    document.getElementById('root')
+)
