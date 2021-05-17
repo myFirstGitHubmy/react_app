@@ -33,7 +33,7 @@ import {DatabaseContext} from "../context/database/databaseContext";
     <div className="form-group">
         {Object.keys(notes).map(note => <div key={notes[note].id}>
             {notes[note].name}
-            <button className="delete-icon" type="button" /*onClick={() => onRemove(note.id)}8=*/><img alt="delete" src={deleteIcon} className="delete-icon"/></button></div>)}
+            <button className="icon" type="button" onClick={() => onRemove(notes[note].id)}><img alt="delete" src={deleteIcon} className="icon"/></button></div>)}
     </div>
 )
 

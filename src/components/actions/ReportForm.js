@@ -9,11 +9,18 @@ export const ReportForm = (props) => {
     const [selectedOption, setSelectedOption] = useState([])
 
     const saveVariable = () => {
-
+        const obj = {
+            name: 'Сообщить '+ selectedOption ,
+            ident: 'ASSIGN'
+        }
+        database.addCommands(obj)
+        database.fetchVariables()
+        database.fetchCommands()
     }
 
     const fetch = () => {
         database.fetchVariables()
+        database.fetchCommands()
         console.log(database.variables)
     }
 
@@ -41,7 +48,7 @@ export const ReportForm = (props) => {
                         <div className="container">
                             <div className="modal-body">
                                 <select className="custom-select" onChange={handleChangeReport}>
-                                    {Object.keys(props.array).map(item => <option value={props.array[item].id} key={props.array[item].id}>
+                                    {Object.keys(props.array).map(item => <option value={props.array[item].name} key={props.array[item].id}>
                                             {
                                                 props.array[item].name
                                             }
@@ -52,7 +59,10 @@ export const ReportForm = (props) => {
                         </div>
 
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={() => setSelectedOption('')} data-dismiss="modal">Отмена</button>
+                            <button type="button" className="btn btn-secondary" onClick={() => {
+                                setSelectedOption('')
+                                database.fetchCommands()
+                            }} data-dismiss="modal">Отмена</button>
                             <button type="button" className="btn btn-primary" onClick={saveVariable}>Сохранить</button>
                         </div>
                     </div>

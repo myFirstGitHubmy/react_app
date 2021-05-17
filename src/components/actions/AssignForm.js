@@ -11,7 +11,15 @@ export const AssignForm = () => {
     const [status, setStatus] = useState(false)
 
     const saveVariable = () => {
+        const obj = {
+            name: 'Запросить '+ name + ' и присвоить значение',
+            ident: 'ASSIGN'
+        }
+        database.addCommands(obj)
+        database.fetchCommands()
         database.addVariable({name: name, value: value})
+        database.fetchVariables()
+
         alert.show('Переменная с именем ' + name + ' добавлена','success')
     }
 

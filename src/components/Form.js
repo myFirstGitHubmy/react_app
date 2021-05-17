@@ -6,12 +6,12 @@ import {DatabaseContext} from "../context/database/databaseContext";
 import {VariableList} from "./VariableList";
 import {AlertContext} from "../context/alert/alertContext";
 import {Alert} from "./Alert";
-import deleteIcon from "../resources/delete-icon.png"
 import {Notes} from "./Notes";
+import {ConditionForm} from "./actions/ConditionForm";
 
 export const Form = () => {
 
-    const {commands,variables,  fetchCommands, removeVariables, fetchVariables} = useContext(DatabaseContext)
+    const {commands,variables,  fetchCommands, removeVariables, fetchVariables,addCommands} = useContext(DatabaseContext)
     const alert = useContext(AlertContext)
     // const fetch = () => {
     //     fetchCommands
@@ -35,7 +35,44 @@ export const Form = () => {
                     <RequestForm/>
                     <AssignForm />
                     <ReportForm array={variables}/>
-                    <input type="text"  className="form-control"/>
+                </div>
+                <div>
+                    <div><ConditionForm array={variables}/></div>
+                    <div>
+                        <button type="button" className="btn btn-primary" onClick={() => {
+                            addCommands({name: 'То', ident: 'THEN'})
+                            fetchCommands()
+                        }}>
+                            То
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" className="btn btn-primary" onClick={
+                            () => {
+                                addCommands({name: 'Иначе', ident: 'ELSE'})
+                                fetchCommands()
+                            }}>
+                            Иначе
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" className="btn btn-primary" onClick={
+                            () => {
+                                addCommands({name: 'Конец ветвления', ident: 'END_CONDITION'})
+                                fetchCommands()
+                            }}>
+                            Конец ветвления
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" className="btn btn-primary" onClick={
+                            () => {
+                                addCommands({name: 'Конец', ident: 'END'})
+                                fetchCommands()
+                            }}>
+                            Конец
+                        </button>
+                    </div>
                 </div>
             <Notes notes={commands}/>
             </form>
