@@ -30,10 +30,10 @@ import {DatabaseContext} from "../context/database/databaseContext";
 // }
 
  export const Notes = ({notes, onRemove}) => (
-    <div className="form-group">
-        {Object.keys(notes).map(note => <div key={notes[note].id}>
-            {notes[note].name}
-            <button className="icon" type="button" onClick={() => onRemove(notes[note].id)}><img alt="delete" src={deleteIcon} className="icon"/></button></div>)}
+    <div className="form-group div-margin-1">
+            {Object.keys(notes).map(note => <div className="form-group div-margin-3" key={notes[note].id}>
+                {notes[note].name}
+                <button className="icon" type="button" onClick={() => onRemove(notes[note].id)}><img alt="delete" src={deleteIcon} className="icon"/></button></div>)}
     </div>
 )
 

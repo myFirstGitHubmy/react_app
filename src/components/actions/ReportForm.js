@@ -7,12 +7,23 @@ export const ReportForm = (props) => {
 
     const database = useContext(DatabaseContext)
     const [selectedOption, setSelectedOption] = useState([])
+    const [radio, setRadio] = useState(false)
+    const [value, setValue] = useState('')
 
     const saveVariable = () => {
-        const obj = {
-            name: 'Сообщить '+ selectedOption ,
-            ident: 'ASSIGN'
+        let obj = null
+        if (radio){
+            obj = {
+                name: 'Сообщить '+ value ,
+                ident: 'ASSIGN'
+            }
+        }else{
+            obj = {
+                name: 'Сообщить '+ selectedOption ,
+                ident: 'ASSIGN'
+            }
         }
+
         database.addCommands(obj)
         database.fetchVariables()
         database.fetchCommands()
@@ -30,10 +41,12 @@ export const ReportForm = (props) => {
         console.log(selectedOption)
     }
 
+    const dis = `disabled`;
+
     return (
         <div>
             <button type="button" onClick={fetch} className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLongReport">
-                Сообщить
+                Сообщить ...
             </button>
             <div className="modal fade" id="exampleModalLongReport" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -45,16 +58,27 @@ export const ReportForm = (props) => {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="container">
-                            <div className="modal-body">
-                                <select className="custom-select" onChange={handleChangeReport}>
-                                    {Object.keys(props.array).map(item => <option value={props.array[item].name} key={props.array[item].id}>
-                                            {
-                                                props.array[item].name
-                                            }
-                                        </option>
-                                    )}
-                                </select>
+                        <div className="modal-body">
+                            <div className="input-group mb-3">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text">
+                                        <input type="checkbox" onSelect={radio} onChange={() => setRadio(!radio)} aria-label="Checkbox for following text input"/>
+                                    </div>
+                                </div>
+                                <input type="text" id="report" placeholder="Введите строку" className="form-control" onChange={e => setValue(e.target.value)} disabled={!radio} aria-label="Text input with checkbox"/>
+                                {radio === false ? <div className="container div-margin-1">
+
+                                    <select className="custom-select" onChange={handleChangeReport}>
+                                        {Object.keys(props.array).map(item => <option value={props.array[item].name} key={props.array[item].id}>
+                                                {
+                                                    props.array[item].name
+                                                }
+                                            </option>
+                                        )}
+                                    </select>
+
+                                </div>: null}
+
                             </div>
                         </div>
 

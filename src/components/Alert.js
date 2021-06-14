@@ -7,7 +7,6 @@ export const Alert = () => {
     if (!alert.visible){
         return null
     }
-
     return (
         <div className={`alert alert-${alert.type || 'warning'} alert-dismissible`}>
                 <strong>{alert.text}</strong>
@@ -15,6 +14,6 @@ export const Alert = () => {
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
     )
+
 }

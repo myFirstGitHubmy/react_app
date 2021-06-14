@@ -7,7 +7,7 @@ export const Navbar = () => (
                 App
             </div>
 
-            <ul className="navbar-nav">
+            <ul className="navbar-nav row d-flex flex-row container-lg">
                 <li className="nav-item">
                     <NavLink
                         className="nav-link"
@@ -15,6 +15,13 @@ export const Navbar = () => (
                         exact
                     >
                         Главная
+                    </NavLink>
+                    <NavLink
+                        className="nav-link"
+                        to="/pir"
+
+                    >
+                        Пируэтик
                     </NavLink>
                 </li>
             </ul>

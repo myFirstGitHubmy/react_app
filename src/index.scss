@@ -32,3 +32,115 @@ code {
   border: none;
   border-radius: 1rem;
 }
+
+.div-border {
+  border-radius: 1.5rem;
+  border: 1px solid black;
+  margin: 1rem;
+  height: auto;
+  width: 750px;
+  text-align: center;
+}
+
+.div-margin-1 {
+  margin: 1rem;
+}
+
+.div-margin-2 {
+  margin: 20px;
+}
+
+.div-margin-3 {
+  margin: 5px;
+}
+
+button {
+  margin: 10px;
+}
+
+.border-radius-btn button {
+  border-radius: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto';
+  size: 15px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.menu{
+  height: 40px;
+  width: 80px;
+  margin-left: -20px;
+}
+
+.menu-btn {
+  background-color: white;
+  //display: inline;
+  width: 80px;
+  border: none;
+}
+
+.img {
+  border-radius: 1rem;
+  width: 40px;
+  height: 40px;
+}
+
+.form-margin-left {
+  margin-left: 5rem;
+}
+
+.aside-margin-left {
+  margin-left: -10px;
+}
+
+.aside {
+  //border: 1px gray ridge;
+  //display: inline-flex;
+  max-height: 100px;
+  width: 80px;
+  margin-top: 10px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  text-align: center;
+}
+
+#result div{
+  margin: 10px 1rem 10px 1rem ;
+  text-align: center;
+}
+
+#program div{
+  width: 200px;
+  text-align: center;
+  background-color: beige;
+  border-radius: 1rem;
+  font-family: 'Roboto Thin';
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.td-border{
+  border: 1px black solid ;
+  width: 60px;
+  height: 60px;
+}
+
+.icon-h {
+  width: 30px;
+  height: 30px;
+}
+
+.red{
+  background-color: red;
+}
+
+.green{
+  background-color: green;
+}
+
+.yellow{
+  background-color: yellow;
+}
+
+

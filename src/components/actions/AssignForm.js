@@ -12,7 +12,7 @@ export const AssignForm = () => {
 
     const saveVariable = () => {
         const obj = {
-            name: 'Запросить '+ name + ' и присвоить значение',
+            name: 'Запросить '+ name + ' и присвоить значение ' + value,
             ident: 'ASSIGN'
         }
         database.addCommands(obj)
@@ -43,14 +43,14 @@ export const AssignForm = () => {
     return (
         <div>
             <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLongAssign">
-                Запросить и присвоить
+                Запросить ... присвоить ...
             </button>
             <div className="modal fade" id="exampleModalLongAssign" tabIndex="-1" role="dialog"
                  aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Запросить и присвоить</h5>
+                            <h5 className="modal-title">Запросить ... присвоить ...</h5>
                             <button type="button" className="close" data-dismiss="modal" onClick={clear} aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
