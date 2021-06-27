@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
-import {DatabaseContext} from "../../context/database/databaseContext";
-import iconPlus from '../../resources/plus.png'
+import {DatabaseContext} from "../../../context/database/databaseContext";
+import iconPlus from '../../../resources/plus.png'
 
 export const ConditionForm = (props) => {
     const {addCommands, addVariables, fetchVariables, variables, fetchCommands} = useContext(DatabaseContext)
@@ -65,7 +65,7 @@ export const ConditionForm = (props) => {
                                 setValue('')
                                 fetchCommands()
                             }} data-dismiss="modal">Отмена</button>
-                            <button type="button" className="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={saveCondition}>Сохранить</button>
                         </div>
                     </div>
                 </div>

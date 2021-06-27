@@ -1,7 +1,6 @@
 import React, {useContext, useState} from "react";
-import {Alert} from "../Alert";
-import {AlertContext} from "../../context/alert/alertContext";
-import {DatabaseContext} from "../../context/database/databaseContext";
+import {AlertContext} from "../../../context/alert/alertContext";
+import {DatabaseContext} from "../../../context/database/databaseContext";
 
 export const RequestForm = () => {
     const [value, setValue] = useState('')
@@ -12,16 +11,17 @@ export const RequestForm = () => {
        if (value.trim()){
                const com = {
                    name: 'Запросить '+ value,
-                   ident: 'REQ'
+                   ident: 'REQ',
+                   status: true
                }
                database.addCommands(com)
-                   .catch(err => console.log(err.message))
+                   .then()
                database.fetchCommands()
+                   .then(() => console.log("update commands"))
                const varObject = {name: value, value: null}
            try{
                database.addVariable(varObject)
                    .catch(err => {console.log(err.message)})
-               database.fetchVariables()
                alert.show('Переменная ' + value + ' создана', 'success')
            }catch (error){
                alert.show('Что-то пошло не так', 'danger')

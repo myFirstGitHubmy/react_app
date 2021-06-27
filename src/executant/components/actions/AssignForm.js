@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
-import {DatabaseContext} from "../../context/database/databaseContext";
-import {AlertContext} from "../../context/alert/alertContext";
-import {Alert} from "../Alert";
+import {DatabaseContext} from "../../../context/database/databaseContext";
+import {AlertContext} from "../../../context/alert/alertContext";
+import {Alert} from "../../../components/Alert";
 
 export const AssignForm = () => {
     const database = useContext(DatabaseContext)

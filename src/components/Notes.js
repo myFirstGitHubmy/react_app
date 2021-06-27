@@ -15,12 +15,12 @@ import {DatabaseContext} from "../context/database/databaseContext";
 //
 //     updateNotes = () => {
 //         const database = useContext(DatabaseContext)
-//         this.setState({notes: database.commands})
+//         this.setState({notes: (database.commands)})
 //     }
 //
 //     render() {
 //         return (
-//             <div className="form-group" onTimeUpdate={this.updateNotes}>
+//             <div className="form-group">
 //                 {Object.keys(this.state.notes).map(note => <div key={note.id}>
 //                     {this.state.notes[note].name}
 //                     <button className="delete-icon" type="button" /*onClick={() => onRemove(note.id)}8=*/><img alt="delete" src={deleteIcon} className="delete-icon"/></button></div>)}
@@ -29,13 +29,26 @@ import {DatabaseContext} from "../context/database/databaseContext";
 //     }
 // }
 
- export const Notes = ({notes, onRemove}) => (
-    <div className="form-group div-margin-1">
-            {Object.keys(notes).map(note => <div className="form-group div-margin-3" key={notes[note].id}>
-                {notes[note].name}
-                <button className="icon" type="button" onClick={() => onRemove(notes[note].id)}><img alt="delete" src={deleteIcon} className="icon"/></button></div>)}
-    </div>
+ export const Notes = () => {
+     const {commands,removeCommands} = useContext(DatabaseContext)
+
+     const notes = commands
+
+     return (
+         <div id="program" className="div-border">
+             <div className="div-margin-1"><span>Начало</span></div>
+             <div>
+                 <div className="form-group div-margin-1">
+                     {Object.keys(notes).map(note => <div className="form-group div-margin-3" key={notes[note].id}>
+                         {console.log("notes[note].id: "+notes[note].name)}
+                         {notes[note].name}
+                         <button className="icon" type="button" onClick={() => removeCommands(notes[note].id)}><img alt="delete" src={deleteIcon} className="icon"/></button></div>)}
+                 </div>
+             </div>
+         </div>
+
 )
+ }
 
 ReactDom.render(
     Notes,

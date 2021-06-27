@@ -15,10 +15,10 @@ export const DatabaseState = ({children}) => {
 
     const addVariable = async variable => {
         try{
-            const result = await axios.post('http://localhost:8080/api/add_var', variable)
+            const result = await axios.post('http://localhost:8080/api/var/add', variable)
             const payload = Object.keys(result.data).map(key => {
                 return ({
-                    id: result.data.id,
+                    id: result.data[key].id,
                     ...result.data[key]
 
                 })
@@ -27,6 +27,32 @@ export const DatabaseState = ({children}) => {
         }catch (e){
             throw new Error(e.message)
         }
+    }
+
+    const fetchVariables = async () => {
+        const variables = await axios.get('http://localhost:8080/api/var/getAll')
+        console.log(variables)
+        const payload = Object.keys(variables.data).map(key => {
+            return {
+                ...variables.data[key],
+                id: variables.data[key].id
+            }
+        })
+        dispatch({type: FETCH_VAR, payload})
+    }
+
+
+    const removeVariables = async id => {
+        const url = 'http://localhost:8080/api/var/delete/'+id
+        await axios.get(url)
+        const variablesList = await axios.get('http://localhost:8080/api/var/getAll')
+        const payload = Object.keys(variablesList.data).map(key => {
+            return {
+                ...variablesList.data[key],
+                id: variablesList.data[key].id
+            }
+        })
+        dispatch({type: FETCH_VAR, payload})
     }
 
     // const fetchVariable = async (variable) => {
@@ -41,56 +67,13 @@ export const DatabaseState = ({children}) => {
     //
     // }
 
-    const fetchCommands = async () => {
-        const result = await axios.get('http://localhost:8080/api/allCommands')
-        const payload = Object.keys(result.data).map(key => {
-            return {
-                ...result.data[key],
-                id:key
-            }
-        })
-        dispatch({type: FETCH_COMM, payload})
-    }
-
-    const fetchVariables = async () => {
-
-        const variables = await axios.get('http://localhost:8080/api/allVars')
-        console.log(variables)
-        const payload = Object.keys(variables.data).map(key => {
-            return {
-                ...variables.data[key],
-                id: key
-            }
-        })
-        dispatch({type: FETCH_VAR, payload})
-    }
-
-    const removeVariables = async id => {
-        const url = 'http://localhost:8080/api/var/delete/'+id
-            await axios.get(url)
-        const variablesList = await axios.get('http://localhost:8080/api/allVars')
-        const payload = Object.keys(variablesList.data).map(key => {
-            return {
-                ...variablesList.data[key],
-                id: id
-            }
-        })
-        dispatch({type: FETCH_VAR, payload})
-    }
-
     const addCommands = async command => {
-
-        const comm = {
-            name: command.name,
-            ident: command.ident,
-            status: true
-        }
-
         try {
-            const resComm = await axios.post('http://localhost:8080/api/addComm',comm)
+            const resComm = await axios.post('http://localhost:8080/api/com/add',command)
             const payload = Object.keys(resComm.data).map(key => {
                 return {
-                    ...resComm.data[key]
+                    ...resComm.data[key],
+                    id: resComm.data.id
                 }
             })
             dispatch({type: ADD_COMM, payload})
@@ -100,6 +83,33 @@ export const DatabaseState = ({children}) => {
         }
     }
 
+    const fetchCommands = async () => {
+        const result = await axios.get('http://localhost:8080/api/com/getAll')
+        console.log(result)
+        const payload = Object.keys(result.data).map(key => {
+            return {
+                ...result.data[key],
+                id:result.data[key].id
+            }
+        })
+        dispatch({type: FETCH_COMM, payload})
+    }
+
+    const removeCommands = async id => {
+        const url = 'http://localhost:8080/api/com/delete/'+id
+        await axios.get(url)
+        const commandList = await axios.get('http://localhost:8080/api/com/getAll')
+        const payload = Object.keys(commandList.data).map(key => {
+            console.log('commandList.data[key]: '+commandList.data[key].id)
+            return {
+                ...commandList.data[key],
+                id: commandList.data[key].id
+            }
+        })
+        dispatch({type: FETCH_COMM, payload})
+    }
+
+
     return (
         <DatabaseContext.Provider value={{
             addVariable,
@@ -107,6 +117,7 @@ export const DatabaseState = ({children}) => {
             addCommands,
             fetchCommands,
             removeVariables,
+            removeCommands,
             variables: state.variables,
             commands: state.commands
         }}

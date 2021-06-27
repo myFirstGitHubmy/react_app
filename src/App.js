@@ -1,12 +1,12 @@
 import React from 'react'
 import {Route, BrowserRouter} from 'react-router-dom'
 import {Navbar} from "./components/Navbar";
-import {Home} from "./pages/Home";
+import {Home} from "./executant/pages/Home";
 import {AlertState} from './context/alert/alertState'
 import {DatabaseState} from "./context/database/databaseState";
-import {Form} from "./components/FormPiru"
+import {Form} from "./piruatik/components/FormPiru"
 
-function App() {
+export default function App() {
     return (
         <DatabaseState>
             <AlertState>
@@ -21,5 +21,3 @@ function App() {
         </DatabaseState>
     );
 }
-
-export default App;

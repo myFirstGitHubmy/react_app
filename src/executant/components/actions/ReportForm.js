@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {DatabaseContext} from "../../context/database/databaseContext";
+import {DatabaseContext} from "../../../context/database/databaseContext";
 import ReactDom from 'react-dom'
 import {RequestForm} from "./RequestForm";
 
@@ -25,14 +25,6 @@ export const ReportForm = (props) => {
         }
 
         database.addCommands(obj)
-        database.fetchVariables()
-        database.fetchCommands()
-    }
-
-    const fetch = () => {
-        database.fetchVariables()
-        database.fetchCommands()
-        console.log(database.variables)
     }
 
     const handleChangeReport = (event) => {
@@ -40,12 +32,9 @@ export const ReportForm = (props) => {
         setSelectedOption(val)
         console.log(selectedOption)
     }
-
-    const dis = `disabled`;
-
     return (
         <div>
-            <button type="button" onClick={fetch} className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLongReport">
+            <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLongReport">
                 Сообщить ...
             </button>
             <div className="modal fade" id="exampleModalLongReport" tabIndex="-1" role="dialog"
@@ -85,7 +74,6 @@ export const ReportForm = (props) => {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={() => {
                                 setSelectedOption('')
-                                database.fetchCommands()
                             }} data-dismiss="modal">Отмена</button>
                             <button type="button" className="btn btn-primary" onClick={saveVariable}>Сохранить</button>
                         </div>

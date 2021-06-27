@@ -38,7 +38,7 @@ code {
   border: 1px solid black;
   margin: 1rem;
   height: auto;
-  width: 750px;
+  width: 800px;
   text-align: center;
 }
 
@@ -54,8 +54,12 @@ code {
   margin: 5px;
 }
 
+.div-margin-4 {
+  margin: 2px;
+}
+
 button {
-  margin: 10px;
+  margin: 5px;
 }
 
 .border-radius-btn button {
@@ -86,7 +90,11 @@ button {
 }
 
 .form-margin-left {
-  margin-left: 5rem;
+  margin-left: 2rem;
+}
+
+.form-margin-left-1 {
+  margin-left: 1rem;
 }
 
 .aside-margin-left {
@@ -143,4 +151,10 @@ h1,h2,h3,h4,h5,h6 {
   background-color: yellow;
 }
 
+.td-img{
+    width: 60px;
+    height: 60px;
+    margin: 0;
+
+}
 
