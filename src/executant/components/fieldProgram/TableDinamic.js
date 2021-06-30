@@ -29,7 +29,10 @@ export const TableDinamic = (props, {handleArray}) => {
 
                                     // onChange={itemTd.id+((item.id*10)-10)===props.id?
                                     //     () => handleArray(itemTd.id+((item.id*10)-10),props.operation.value):null}
-                                >{(itemTd.id+((item.id*10)-10)) === props.id && props.ell?<img className="td-img" src={ellips} alt="ellips"/>:null}
+                                >
+                                    {(itemTd.id+((item.id*10)-10)) === props.id && props.ell?
+                                    <img className="td-img" src={ellips} alt="ellips"/>
+                                    :null}
                                 </td>
                             ))
                         }

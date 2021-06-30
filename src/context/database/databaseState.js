@@ -13,7 +13,7 @@ export const DatabaseState = ({children}) => {
     const [state, dispatch] = useReducer(databaseReducer, initialState)
 
 
-    const addVariable = async variable => {
+    const addVariable = async (variable) => {
         try{
             const result = await axios.post('http://localhost:8080/api/var/add', variable)
             const payload = Object.keys(result.data).map(key => {
@@ -27,6 +27,7 @@ export const DatabaseState = ({children}) => {
         }catch (e){
             throw new Error(e.message)
         }
+
     }
 
     const fetchVariables = async () => {
@@ -55,25 +56,13 @@ export const DatabaseState = ({children}) => {
         dispatch({type: FETCH_VAR, payload})
     }
 
-    // const fetchVariable = async (variable) => {
-    //     const variableObj = await axios.post('http://localhost:8080/api/update/var',variable).then(e => console.log(e)).catch(err=> console.log(err))
-    //     const payload = Object.keys(variableObj.data).map(key => {
-    //         return {
-    //             ...variableObj.data[key],
-    //             id: key
-    //         }
-    //     })
-    //     dispatch({type: FETCH_VAR, payload})
-    //
-    // }
-
-    const addCommands = async command => {
+    const addCommands = async (command) => {
         try {
             const resComm = await axios.post('http://localhost:8080/api/com/add',command)
             const payload = Object.keys(resComm.data).map(key => {
                 return {
                     ...resComm.data[key],
-                    id: resComm.data.id
+                    id: key
                 }
             })
             dispatch({type: ADD_COMM, payload})

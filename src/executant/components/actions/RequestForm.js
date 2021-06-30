@@ -1,35 +1,60 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState,useEffect} from "react";
 import {AlertContext} from "../../../context/alert/alertContext";
 import {DatabaseContext} from "../../../context/database/databaseContext";
 
 export const RequestForm = () => {
+
     const [value, setValue] = useState('')
     const alert = useContext(AlertContext)
-    const database = useContext(DatabaseContext)
+    const {variables,commands, addCommands,fetchCommands,addVariable,fetchVariables} = useContext(DatabaseContext)
+
+    useEffect(()=>{
+        fetchVariables()
+            .then(() => console.log(variables.json))
+    },[])
 
     const saveVariable = () => {
-       if (value.trim()){
-               const com = {
-                   name: 'Запросить '+ value,
-                   ident: 'REQ',
-                   status: true
-               }
-               database.addCommands(com)
-                   .then()
-               database.fetchCommands()
-                   .then(() => console.log("update commands"))
-               const varObject = {name: value, value: null}
-           try{
-               database.addVariable(varObject)
-                   .catch(err => {console.log(err.message)})
-               alert.show('Переменная ' + value + ' создана', 'success')
-           }catch (error){
-               alert.show('Что-то пошло не так', 'danger')
-           }
-               setValue('')
-       }else{
-           alert.show('Введите название переменной')
-       }
+        const arr = variables
+        let checkRepeatVar = false
+        Object.keys(arr).map(item=> {
+            if (arr[item].name.toLowerCase() === value.toLowerCase()){
+                checkRepeatVar = true
+            }
+        })
+        if (checkRepeatVar){
+            alert.show('Переменная ' + value + ' уже существует', 'warning')
+        }else {
+            if (value.trim()) {
+                const com = {
+                    name: 'Запросить ' + value,
+                    ident: 'REQ',
+                    status: true
+                }
+                addCommands(com)
+                    .then(res => console.log("res: "+ res))
+                fetchCommands()
+                    .then(() => console.log("update commands"))
+                setValue('')
+                let lastCom = null
+                Object.keys(commands).map(item => {
+                    lastCom = commands[item].id
+                })
+                console.log("comm: "+lastCom)
+                const varObject = {name: value, value: null,commands:lastCom+1}
+                try {
+                    addVariable(varObject)
+                        .catch(err => {
+                            console.log(err.message)
+                        })
+                    alert.show('Переменная ' + value + ' создана', 'success')
+                    fetchVariables()
+                } catch (error) {
+                    alert.show('Что-то пошло не так', 'danger')
+                }
+            } else {
+                alert.show('Введите название переменной')
+            }
+        }
     }
 
     return (
