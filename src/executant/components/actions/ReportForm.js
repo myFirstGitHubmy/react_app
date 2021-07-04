@@ -2,6 +2,7 @@ import React, {useContext, useState} from "react";
 import {DatabaseContext} from "../../../context/database/databaseContext";
 import ReactDom from 'react-dom'
 import {RequestForm} from "./RequestForm";
+import {REPORT} from "../../../context/identTypes"
 
 export const ReportForm = (props) => {
 
@@ -15,12 +16,12 @@ export const ReportForm = (props) => {
         if (radio){
             obj = {
                 name: 'Сообщить '+ value ,
-                ident: 'ASSIGN'
+                ident: REPORT
             }
         }else{
             obj = {
                 name: 'Сообщить '+ selectedOption ,
-                ident: 'ASSIGN'
+                ident: REPORT
             }
         }
 
@@ -51,14 +52,16 @@ export const ReportForm = (props) => {
                             <div className="input-group mb-3">
                                 <div className="input-group-prepend">
                                     <div className="input-group-text">
-                                        <input type="checkbox" onSelect={radio} onChange={() => setRadio(!radio)} aria-label="Checkbox for following text input"/>
+                                        <input type="checkbox"
+                                               // onSelect={radio}
+                                               onChange={() => setRadio(!radio)} aria-label="Checkbox for following text input"/>
                                     </div>
                                 </div>
                                 <input type="text" id="report" placeholder="Введите строку" className="form-control" onChange={e => setValue(e.target.value)} disabled={!radio} aria-label="Text input with checkbox"/>
                                 {radio === false ? <div className="container div-margin-1">
 
                                     <select className="custom-select" onChange={handleChangeReport}>
-                                        {Object.keys(props.array).map(item => <option value={props.array[item].name} key={props.array[item].id}>
+                                        {Object.keys(props.array).map(item => <option value={props.array[item].name} key={item}>
                                                 {
                                                     props.array[item].name
                                                 }

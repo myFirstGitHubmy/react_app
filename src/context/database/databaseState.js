@@ -1,4 +1,4 @@
-import React, {useReducer} from "react";
+import React, {useReducer,useState} from "react";
 import {databaseReducer} from "./databaseReducer";
 import axios from "axios";
 import {DatabaseContext} from "./databaseContext";
@@ -11,6 +11,7 @@ export const DatabaseState = ({children}) => {
     }
 
     const [state, dispatch] = useReducer(databaseReducer, initialState)
+    const [index, setIndex] = useState(0)
 
 
     const addVariable = async (variable) => {
@@ -42,6 +43,15 @@ export const DatabaseState = ({children}) => {
         dispatch({type: FETCH_VAR, payload})
     }
 
+    const updateVariable = async (variable) => {
+        const variables = await axios.get('http://localhost:8080/api/var/update?id='+variable.id+'&value='+variable.value)
+        console.log(variables)
+        const payload = {
+                ...variables.data,
+                id: variables.data.id
+            }
+        dispatch({type: FETCH_VAR, payload})
+    }
 
     const removeVariables = async id => {
         const url = 'http://localhost:8080/api/var/delete/'+id
@@ -59,14 +69,16 @@ export const DatabaseState = ({children}) => {
     const addCommands = async (command) => {
         try {
             const resComm = await axios.post('http://localhost:8080/api/com/add',command)
-            const payload = Object.keys(resComm.data).map(key => {
-                return {
-                    ...resComm.data[key],
-                    id: key
-                }
-            })
-            dispatch({type: ADD_COMM, payload})
 
+            console.log(resComm)
+            const payload = {
+                    ...resComm.data,
+                    id: resComm.data.id,
+                    index:resComm.data.id
+                }
+            console.log('index add_com: '+resComm.data.id)
+            dispatch({type: ADD_COMM, payload})
+            setIndex(resComm.data.id)
         }catch (e){
             throw new Error(e.message)
         }
@@ -75,13 +87,17 @@ export const DatabaseState = ({children}) => {
     const fetchCommands = async () => {
         const result = await axios.get('http://localhost:8080/api/com/getAll')
         console.log(result)
+        let index = 0
         const payload = Object.keys(result.data).map(key => {
+            index = result.data[key].id
             return {
                 ...result.data[key],
                 id:result.data[key].id
             }
         })
+        console.log('index fetch_com: '+index)
         dispatch({type: FETCH_COMM, payload})
+        setIndex(index+1)
     }
 
     const removeCommands = async id => {
@@ -103,12 +119,14 @@ export const DatabaseState = ({children}) => {
         <DatabaseContext.Provider value={{
             addVariable,
             fetchVariables,
+            updateVariable,
             addCommands,
             fetchCommands,
             removeVariables,
             removeCommands,
             variables: state.variables,
-            commands: state.commands
+            commands: state.commands,
+            lastIndex: index
         }}
         >
             {children}

@@ -1,0 +1,13 @@
+export const REQ = 'REQ';
+export const ASSIGN = 'ASSIGN';
+export const REPORT = 'REPORT';
+export const STOP = 'STOP';
+export const CONDITION = 'CONDITION';
+export const THEN = 'THEN';
+export const ELSE = 'ELSE';
+export const END_CONDITION = 'END_CONDITION';
+export const CYCLE = 'CYCLE';
+export const WHEN = 'WHEN';
+export const REPEAT = 'REPEAT';
+export const END_CYCLE = 'END_CYCLE';
+export const END = 'END';

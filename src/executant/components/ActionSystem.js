@@ -42,7 +42,7 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-primary" onClick={
                             () => {
-                                addCommands({name: 'Цикл', ident: 'Cicle'})
+                                addCommands({name: 'Цикл', ident: 'CYCLE'})
                                 fetchCommands()
                             }}>
                             Цикл
@@ -100,7 +100,7 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-outline-primary" onClick={
                             () => {
-                                addCommands({name: 'Конец цикла', ident: 'END_CIRCLE'})
+                                addCommands({name: 'Конец цикла', ident: 'END_CYCLE'})
                                 fetchCommands()
                             }}>
                             Конец цикла

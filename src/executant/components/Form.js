@@ -39,14 +39,10 @@ export const Form = () => {
                         <VariableList />
                     </div>
                 </div>
-
                 <ExecutorCommandSystem />
                 <Notes/>
-
-
-
-                </div>
             </div>
+        </div>
     )
 }
 

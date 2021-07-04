@@ -1,12 +1,13 @@
 import React, {useContext, useState,useEffect} from "react";
 import {AlertContext} from "../../../context/alert/alertContext";
 import {DatabaseContext} from "../../../context/database/databaseContext";
+import {REQ} from "../../../context/identTypes"
 
 export const RequestForm = () => {
 
     const [value, setValue] = useState('')
     const alert = useContext(AlertContext)
-    const {variables,commands, addCommands,fetchCommands,addVariable,fetchVariables} = useContext(DatabaseContext)
+    const {variables,commands, addCommands,fetchCommands,addVariable,fetchVariables,lastIndex} = useContext(DatabaseContext)
 
     useEffect(()=>{
         fetchVariables()
@@ -27,20 +28,21 @@ export const RequestForm = () => {
             if (value.trim()) {
                 const com = {
                     name: 'Запросить ' + value,
-                    ident: 'REQ',
+                    ident: REQ,
                     status: true
                 }
                 addCommands(com)
                     .then(res => console.log("res: "+ res))
                 fetchCommands()
                     .then(() => console.log("update commands"))
+                console.log('lastIndex: '+ lastIndex)
                 setValue('')
                 let lastCom = null
                 Object.keys(commands).map(item => {
                     lastCom = commands[item].id
                 })
                 console.log("comm: "+lastCom)
-                const varObject = {name: value, value: null,commands:lastCom+1}
+                const varObject = {name: value, value: null,commands:lastIndex}
                 try {
                     addVariable(varObject)
                         .catch(err => {

@@ -1,11 +1,8 @@
 import React from "react";
 import start_btn from "../../resources/start.png"
+import {StartProgram} from "../StartProgram"
 
 export const AsideMenu = ({isVisible}) => {
-    const req = () => {
-        let res = prompt('Введите значение переменной: А')
-    }
-
 
     let newVar =
         <div>
@@ -13,7 +10,7 @@ export const AsideMenu = ({isVisible}) => {
                 {isVisible?<div className="aside ">
                     <div className="aside aside-margin-left">
                         <div className="menu">
-                            <button className="menu-btn" onClick={req}><img className="img" src={start_btn} alt=""/></button>
+                            <StartProgram />
                         </div>
                         <div>
                             <button type="button" className="btn btn-outline-info" onClick={

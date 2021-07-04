@@ -2,9 +2,9 @@ import {ADD_COMM, ADD_VAR, FETCH_COMM, FETCH_VAR, REMOVE_COMM, REMOVE_VAR} from 
 
 const handlers = {
     [ADD_VAR]: (state, {payload}) => ({...state, variables: [...state.variables, payload]}),
-    [ADD_COMM]: (state, {payload}) => ({...state, commands: [...state.commands, payload]}),
+    [ADD_COMM]: (state, {payload}) => ({...state, lastIndex: payload.index, commands: [...state.commands, payload]}),
     [FETCH_VAR]: (state, {payload}) => ({...state, variables: payload}),
-    [FETCH_COMM]: (state, {payload}) => ({...state, commands: payload}),
+    [FETCH_COMM]: (state, {payload}) => ({...state, lastIndex: payload.index, commands: payload}),
     [REMOVE_VAR]: (state, {payload}) => ({
         ...state,
         variables: state.variables.filter(variable => variable.id !== payload)}),

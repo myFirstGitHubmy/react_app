@@ -4,6 +4,7 @@ import {RequestForm} from "./actions/RequestForm";
 import {AssignForm} from "./actions/AssignForm";
 import {ReportForm} from "./actions/ReportForm";
 import {DatabaseContext} from "../../context/database/databaseContext";
+import {STOP} from "../../context/identTypes"
 
 export const ExecutorCommandSystem = () => {
     const {variables,  fetchCommands, removeVariables, fetchVariables,addCommands} = useContext(DatabaseContext)
@@ -24,7 +25,7 @@ export const ExecutorCommandSystem = () => {
                     <div>
                         <button type="button" className="btn btn-primary" onClick={
                             () => {
-                                addCommands({name: 'Стоп', ident: 'Stop'})
+                                addCommands({name: 'Стоп', ident: STOP})
                                 fetchCommands()
                             }}>
                             Стоп
