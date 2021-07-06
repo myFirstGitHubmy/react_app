@@ -2,32 +2,71 @@ import React, {useContext} from 'react'
 import start_btn from "../resources/start.png";
 import {DatabaseContext} from "../context/database/databaseContext";
 import {REQ, ASSIGN, STOP, END, REPORT, CONDITION, CYCLE, ELSE, END_CONDITION, END_CYCLE, REPEAT, THEN, WHEN} from "../context/identTypes"
+import ReactDOM from "react-dom"
 
-export const StartProgram = () => {
-    const {commands,fetchCommands,lastIndex,updateVariable,fetchVariables} = useContext(DatabaseContext)
+export const StartProgram = ({arr, onChange}) => {
+    const {commands,variables,fetchCommands,lastIndex,updateVariable,fetchVariables,addVariable} = useContext(DatabaseContext)
+    const array = []
 
     const req = () => {
+
         console.log('lastBefore: '+lastIndex)
         fetchCommands()
         console.log('lastAfter: '+lastIndex)
         let res
+        let isExistsVariable = false
         Object.keys(commands).map(item => {
-            console.log('commands[item].ident '+commands[item].ident+' item '+ item)
-            if (commands[item].ident===REQ){
-               res = prompt('Введите значение переменной: '+commands[item].name)
-                const obj = {
-                    id: commands[item].id,
-                    value: res
+            isExistsVariable = false
+            // поиск переменной в списке переменных
+            console.log(variables)
+            Object.keys(variables).map(variable => {
+                if (variables[variable].name.toLowerCase() === commands[item].nameVariable){
+                    isExistsVariable = true
                 }
-                console.log(obj)
-                updateVariable(obj)
-                fetchVariables()
-                    .then(res => console.log(res))
+            })
+            if (commands[item].ident===REQ || commands[item].ident===REPORT){
+               res = prompt('Введите значение переменной: '+commands[item].nameVariable)
+                if (isExistsVariable){
+                    const obj = {
+                        id: commands[item].id,
+                        value: res
+                    }
+                    updateVariable(obj)
+                    fetchVariables()
+                }else{
+                    const obj = {
+                        name: commands[item].nameVariable,
+                        value: res,
+                        commands: commands[item].id
+                    }
+                    addVariable(obj)
+                }
+                array.push(commands[item].nameVariable + ' = '+ res)
+                console.log(array)
+                // array.push(commands[item].nameVariable + ' = '+res)
+                //     .then(res => console.log(res))
             }else if (commands[item].ident===REPORT){
-                console.log('startProgram report: '+ commands[item].name)
+                // if (isExistsVariable){
+                //     const obj = {
+                //         id: commands[item].id,
+                //         value: res
+                //     }
+                //     updateVariable(obj)
+                //     fetchVariables()
+                // }else{
+                //     const obj = {
+                //         name: commands[item].nameVariable,
+                //         value: res,
+                //         commands: commands[item].id
+                //     }
+                //     addVariable(obj)
+                //     fetchVariables()
+                // }
+                // onChange(commands[item].nameVariable)
+                // // array.push(commands[item].nameVariable)
             }
         })
-
+        onChange(array)
     }
 
     return (
@@ -36,3 +75,8 @@ export const StartProgram = () => {
         </div>
     )
 }
+
+ReactDOM.render(
+    StartProgram,
+    document.getElementById('root')
+)

@@ -31,7 +31,7 @@ import {DatabaseContext} from "../context/database/databaseContext";
 
  export const Notes = () => {
      const {commands, fetchCommands, removeCommands} = useContext(DatabaseContext)
-     useEffect(()=> {
+     useEffect(() => {
          fetchCommands()
      },[])
 

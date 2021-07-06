@@ -114,6 +114,9 @@ export const DatabaseState = ({children}) => {
         dispatch({type: FETCH_COMM, payload})
     }
 
+    const removeAll = async () => {
+        await axios.get('http://localhost:8080/api/db/deleteAll/')
+    }
 
     return (
         <DatabaseContext.Provider value={{
@@ -124,6 +127,7 @@ export const DatabaseState = ({children}) => {
             fetchCommands,
             removeVariables,
             removeCommands,
+            removeAll,
             variables: state.variables,
             commands: state.commands,
             lastIndex: index

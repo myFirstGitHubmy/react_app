@@ -1,8 +1,10 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {DatabaseContext} from "../../context/database/databaseContext";
+import {ConditionForm} from "./actions/ConditionForm";
 
 export const ActionSystem = () => {
     const {commands,variables,  fetchCommands, removeVariables, fetchVariables,addCommands} = useContext(DatabaseContext)
+    const [when, setWhen] = useState('')
 
     return (
         <div>

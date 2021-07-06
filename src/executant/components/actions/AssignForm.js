@@ -1,15 +1,18 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {DatabaseContext} from "../../../context/database/databaseContext";
 import {AlertContext} from "../../../context/alert/alertContext";
-import {Alert} from "../../../components/Alert";
 import {ASSIGN} from "../../../context/identTypes"
 
 export const AssignForm = () => {
-    const {variables,commands, addCommands,updateVariable,fetchCommands,addVariable,fetchVariables,lastIndex} = useContext(DatabaseContext)
+    const {variables, addCommands,updateVariable,fetchCommands,addVariable,fetchVariables,lastIndex} = useContext(DatabaseContext)
     const alert = useContext(AlertContext)
     const [name, setName] = useState('')
     const [value, setValue] = useState('')
     const [status, setStatus] = useState(false)
+
+    useEffect(()=>{
+        fetchVariables()
+    },[])
 
     const saveVariable = () => {
         const obj = {
@@ -18,22 +21,22 @@ export const AssignForm = () => {
             status: true
         }
         let checkVar = false
+        fetchVariables()
         addCommands(obj)
         fetchCommands()
         Object.keys(variables).map(item=> {
-            if (variables[item].name.toLowerCase() === value.toLowerCase()){
+            if (variables[item].name.toLowerCase() === name.toLowerCase()){
                 checkVar = true
             }
         })
         if (checkVar){
-            updateVariable({value: value,commands:lastIndex})
+            updateVariable({id: lastIndex, value: value})
             alert.show('Значение переменной с именем ' + name + ' обновлено','primary')
         }else{
             addVariable({name: name, value: value,commands:lastIndex})
+            alert.show('Переменная с именем ' + name + ' добавлена','success')
         }
         fetchVariables()
-
-        alert.show('Переменная с именем ' + name + ' добавлена','success')
     }
 
     const clear = () => {

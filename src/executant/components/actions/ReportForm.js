@@ -78,7 +78,7 @@ export const ReportForm = (props) => {
                             <button type="button" className="btn btn-secondary" onClick={() => {
                                 setSelectedOption('')
                             }} data-dismiss="modal">Отмена</button>
-                            <button type="button" className="btn btn-primary" onClick={saveVariable}>Сохранить</button>
+                            <button type="button" className="btn btn-primary" onClick={saveVariable} data-dismiss="modal" >Сохранить</button>
                         </div>
                     </div>
                 </div>
