@@ -1,38 +1,49 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {DatabaseContext} from "../../../context/database/databaseContext";
 import ReactDom from 'react-dom'
 import {RequestForm} from "./RequestForm";
 import {REPORT} from "../../../context/identTypes"
 
-export const ReportForm = (props) => {
+export const ReportForm = () => {
 
-    const database = useContext(DatabaseContext)
+    const {commands,addCommands,fetchCommands} = useContext(DatabaseContext)
     const [selectedOption, setSelectedOption] = useState([])
+    const [valueSelected, setValueSelected] = useState('')
     const [radio, setRadio] = useState(false)
     const [value, setValue] = useState('')
+
+    useEffect(() => {
+        fetchCommands()
+    },[])
 
     const saveVariable = () => {
         let obj = null
         if (radio){
             obj = {
                 name: 'Сообщить '+ value ,
-                ident: REPORT
+                ident: REPORT,
+                nameVariable: value,
+                valueVariable: null
             }
         }else{
             obj = {
                 name: 'Сообщить '+ selectedOption ,
-                ident: REPORT
+                ident: REPORT,
+                nameVariable: selectedOption,
+                valueVariable: valueSelected
             }
         }
-
-        database.addCommands(obj)
+        addCommands(obj)
     }
 
     const handleChangeReport = (event) => {
         const val = Array.from(event.target.selectedOptions, option => option.value)
-        setSelectedOption(val)
-        console.log(selectedOption)
+        console.log(val)
+        const mas = val[0].split(' ')
+        setSelectedOption(mas[0])
+        setValueSelected(mas[1])
     }
+
     return (
         <div>
             <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalLongReport">
@@ -61,9 +72,10 @@ export const ReportForm = (props) => {
                                 {radio === false ? <div className="container div-margin-1">
 
                                     <select className="custom-select" onChange={handleChangeReport}>
-                                        {Object.keys(props.array).map(item => <option value={props.array[item].name} key={item}>
+                                        {Object.keys(commands).filter(com => commands[com].status === true).map(item =>
+                                            <option value={commands[item].nameVariable + ' '+ commands[item].valueVariable} key={item}>
                                                 {
-                                                    props.array[item].name
+                                                    commands[item].nameVariable
                                                 }
                                             </option>
                                         )}

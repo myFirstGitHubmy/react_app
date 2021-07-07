@@ -12,6 +12,7 @@ export const StartProgram = ({arr, onChange}) => {
 
         console.log('lastBefore: '+lastIndex)
         fetchCommands()
+        fetchVariables()
         console.log('lastAfter: '+lastIndex)
         let res
         let isExistsVariable = false
@@ -19,12 +20,15 @@ export const StartProgram = ({arr, onChange}) => {
             isExistsVariable = false
             // поиск переменной в списке переменных
             console.log(variables)
+            if (variables === null){
+                isExistsVariable = true
+            }
             Object.keys(variables).map(variable => {
-                if (variables[variable].name.toLowerCase() === commands[item].nameVariable){
+                if (variables[variable].name.toLowerCase() === commands[item].nameVariable.toLowerCase()){
                     isExistsVariable = true
                 }
             })
-            if (commands[item].ident===REQ || commands[item].ident===REPORT){
+            if (commands[item].ident===REQ || commands[item].ident===ASSIGN){
                res = prompt('Введите значение переменной: '+commands[item].nameVariable)
                 if (isExistsVariable){
                     const obj = {
@@ -46,24 +50,12 @@ export const StartProgram = ({arr, onChange}) => {
                 // array.push(commands[item].nameVariable + ' = '+res)
                 //     .then(res => console.log(res))
             }else if (commands[item].ident===REPORT){
-                // if (isExistsVariable){
-                //     const obj = {
-                //         id: commands[item].id,
-                //         value: res
-                //     }
-                //     updateVariable(obj)
-                //     fetchVariables()
-                // }else{
-                //     const obj = {
-                //         name: commands[item].nameVariable,
-                //         value: res,
-                //         commands: commands[item].id
-                //     }
-                //     addVariable(obj)
-                //     fetchVariables()
-                // }
-                // onChange(commands[item].nameVariable)
-                // // array.push(commands[item].nameVariable)
+                if (commands[item].nameVariable != null && commands[item].valueVariable != null){
+                    array.push(commands[item].nameVariable + ' = '+ commands[item].valueVariable)
+                }else{
+                    array.push('text = '+ commands[item].nameVariable)
+                }
+                // array.push(commands[item].nameVariable)
             }
         })
         onChange(array)

@@ -7,7 +7,7 @@ import {DatabaseContext} from "../../context/database/databaseContext";
 import {STOP} from "../../context/identTypes"
 
 export const ExecutorCommandSystem = () => {
-    const {variables,  fetchCommands, removeVariables, fetchVariables,addCommands} = useContext(DatabaseContext)
+    const {commands,  fetchCommands,addCommands} = useContext(DatabaseContext)
 
     return (
         <div>
@@ -21,7 +21,7 @@ export const ExecutorCommandSystem = () => {
                 <div className="div-margin-3 align-content-start flex-nowrap d-flex flex-row bd-highlight mb-3">
                     <RequestForm/>
                     <AssignForm />
-                    <ReportForm array={variables}/>
+                    <ReportForm/>
                     <div>
                         <button type="button" className="btn btn-primary" onClick={
                             () => {
