@@ -12,6 +12,7 @@ export const DatabaseState = ({children}) => {
 
     const [state, dispatch] = useReducer(databaseReducer, initialState)
     const [index, setIndex] = useState(0)
+    const [condition, setCondition] = useState([])
 
 
     const addVariable = async (variable) => {
@@ -118,6 +119,10 @@ export const DatabaseState = ({children}) => {
         await axios.get('http://localhost:8080/api/db/deleteAll/')
     }
 
+    const updateCondition = (condition_obj) => {
+        setCondition([...condition, {condition_obj}])
+    }
+
     return (
         <DatabaseContext.Provider value={{
             addVariable,
@@ -127,9 +132,11 @@ export const DatabaseState = ({children}) => {
             fetchCommands,
             removeVariables,
             removeCommands,
+            updateCondition,
             removeAll,
             variables: state.variables,
             commands: state.commands,
+            condition: condition,
             lastIndex: index
         }}
         >
