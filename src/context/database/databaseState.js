@@ -120,7 +120,7 @@ export const DatabaseState = ({children}) => {
     }
 
     const updateCondition = (condition_obj) => {
-        setCondition([...condition, {condition_obj}])
+        setCondition([...condition, condition_obj])
     }
 
     return (

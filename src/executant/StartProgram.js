@@ -5,7 +5,7 @@ import {REQ, ASSIGN, STOP, END, REPORT, CONDITION, CYCLE, ELSE, END_CONDITION, E
 import ReactDOM from "react-dom"
 
 export const StartProgram = ({arr, onChange}) => {
-    const {commands,variables,fetchCommands,lastIndex,updateVariable,fetchVariables,addVariable} = useContext(DatabaseContext)
+    const {commands,condition,variables,fetchCommands,lastIndex,updateVariable,fetchVariables,addVariable} = useContext(DatabaseContext)
     const array = []
 
     const req = () => {
@@ -24,7 +24,7 @@ export const StartProgram = ({arr, onChange}) => {
                 isExistsVariable = true
             }
             Object.keys(variables).map(variable => {
-                if (variables[variable].name.toLowerCase() === commands[item].nameVariable.toLowerCase()){
+                if (variables[variable].name === commands[item].nameVariable){
                     isExistsVariable = true
                 }
             })
@@ -56,6 +56,12 @@ export const StartProgram = ({arr, onChange}) => {
                     array.push('text = '+ commands[item].nameVariable)
                 }
                 // array.push(commands[item].nameVariable)
+            }else if (commands[item].ident===CONDITION){
+                console.log("================condition=============")
+                Object.keys(condition).map(item => {
+                    console.log(condition[item].name + ' - '+ condition[item].value)
+                })
+
             }
         })
         onChange(array)

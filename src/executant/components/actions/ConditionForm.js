@@ -3,7 +3,7 @@ import {DatabaseContext} from "../../../context/database/databaseContext";
 import iconPlus from '../../../resources/plus.png'
 
 export const ConditionForm = (props) => {
-    const {addCommands, updateCondition, fetchVariables, commands, fetchCommands,lastIndex} = useContext(DatabaseContext)
+    const {addCommands,condition, updateCondition, fetchVariables, commands, fetchCommands,lastIndex} = useContext(DatabaseContext)
     const [value, setValue] = useState('')
     const pos = 0
 
@@ -14,13 +14,14 @@ export const ConditionForm = (props) => {
         }
         addCommands(obj_com)
         fetchCommands()
-
     }
 
     const add_var_condition = (event) => {
         const val = Array.from(event.target.selectedOptions, option => option.value)
         const mas = val[0].split(' ')
         updateCondition({name: mas[0], value: mas[1], position: pos, id: lastIndex})
+        setValue(value + mas[0])
+        console.log(condition)
     }
 
 
@@ -52,7 +53,7 @@ export const ConditionForm = (props) => {
                             </div>
                             <p>Переменные:</p>
                             <select className="custom-select" onChange={add_var_condition}>
-                                {Object.keys(commands).filter(fil => commands[fil].status === true).map(item => <option value={commands[item].nameVariable + ' '+ commands[item].valueVariable} key={commands[item].id}>
+                                {Object.keys(commands).filter(fil => commands[fil].status === true).map(item => <option value={commands[item].nameVariable + ' '+ commands[item].id} key={commands[item].id}>
                                         {
                                             commands[item].nameVariable
                                         }
