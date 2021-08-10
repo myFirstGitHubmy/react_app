@@ -41,7 +41,8 @@ import {DatabaseContext} from "../context/database/databaseContext";
              <div>Начало</div>
         {Object.keys(notes).map(note => <div key={notes[note].id}>
             {notes[note].name}
-            <button className="icon" type="button" onClick={() => removeCommands(notes[note].id)}><img alt="delete" src={deleteIcon} className="icon"/></button></div>)}
+            <img alt="delete" src={deleteIcon} className="icon" onClick={() => removeCommands(notes[note].id)}/>
+                </div>)}
     </div>
 )
 }

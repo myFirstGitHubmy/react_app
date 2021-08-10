@@ -31,19 +31,16 @@ export const StartProgram = ({arr, onChange}) => {
             if (commands[item].ident===REQ || commands[item].ident===ASSIGN){
                res = prompt('Введите значение переменной: '+commands[item].nameVariable)
                 if (isExistsVariable){
-                    const obj = {
+                    updateVariable({
                         id: commands[item].id,
-                        value: res
-                    }
-                    updateVariable(obj)
+                        value: res})
                     fetchVariables()
                 }else{
-                    const obj = {
+                    addVariable({
                         name: commands[item].nameVariable,
                         value: res,
                         commands: commands[item].id
-                    }
-                    addVariable(obj)
+                    })
                 }
                 array.push(commands[item].nameVariable + ' = '+ res)
                 console.log(array)
