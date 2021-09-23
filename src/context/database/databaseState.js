@@ -115,6 +115,17 @@ export const DatabaseState = ({children}) => {
         dispatch({type: FETCH_COMM, payload})
     }
 
+    const updateStatusCommand = async (command) => {
+        const comm = await axios.post('http://localhost:8080/api/com/', command)
+        const payload = Object.keys(comm.data).map(key => {
+            return {
+                ...comm.data[key],
+                id:comm.data[key].id
+            }
+        })
+        dispatch({type: FETCH_COMM, payload})
+    }
+
     const removeAll = async () => {
         await axios.get('http://localhost:8080/api/db/deleteAll/')
     }

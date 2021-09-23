@@ -28,7 +28,7 @@ export const StartProgram = ({arr, onChange}) => {
                     isExistsVariable = true
                 }
             })
-            if (commands[item].ident===REQ || commands[item].ident===ASSIGN){
+            if (commands[item].ident===REQ){
                res = prompt('Введите значение переменной: '+commands[item].nameVariable)
                 if (isExistsVariable){
                     updateVariable({
@@ -46,6 +46,19 @@ export const StartProgram = ({arr, onChange}) => {
                 console.log(array)
                 // array.push(commands[item].nameVariable + ' = '+res)
                 //     .then(res => console.log(res))
+            }else if (commands[item].ident===ASSIGN){
+                if (isExistsVariable){
+                    updateVariable({
+                        id: commands[item].id,
+                        value: commands[item].valueVariable})
+                    fetchVariables()
+                }else{
+                    addVariable({
+                        name: commands[item].nameVariable,
+                        value: commands[item].valueVariable,
+                        commands: commands[item].id
+                    })
+                }
             }else if (commands[item].ident===REPORT){
                 if (commands[item].nameVariable != null && commands[item].valueVariable != null){
                     array.push(commands[item].nameVariable + ' = '+ commands[item].valueVariable)
@@ -56,6 +69,11 @@ export const StartProgram = ({arr, onChange}) => {
             }else if (commands[item].ident===CONDITION){
                 console.log("================condition=============")
                 Object.keys(condition).map(item => {
+                    if (commands[item].name.indexOf(">")!==-1){
+                        if (condition[item].value>condition[item+1].value){
+
+                        }
+                    }
                     console.log(condition[item].name + ' - '+ condition[item].value)
                 })
 

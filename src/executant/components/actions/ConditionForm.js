@@ -5,7 +5,7 @@ import iconPlus from '../../../resources/plus.png'
 export const ConditionForm = (props) => {
     const {addCommands,condition, updateCondition, fetchVariables, commands, fetchCommands,lastIndex} = useContext(DatabaseContext)
     const [value, setValue] = useState('')
-    const pos = 0
+    let pos = 0
 
     const saveCondition = () => {
         const obj_com = {
@@ -21,6 +21,7 @@ export const ConditionForm = (props) => {
         const mas = val[0].split(' ')
         updateCondition({name: mas[0], value: mas[1], position: pos, id: lastIndex})
         setValue(value + mas[0])
+        pos++;
         console.log(condition)
     }
 
