@@ -12,12 +12,13 @@ import {ResultProgram} from "./ResultProgram";
 
 export const Form = () => {
 
-    const {fetchCommands} = useContext(DatabaseContext)
+    const {fetchCommands,fetchCondition} = useContext(DatabaseContext)
     const [isVisibleMenu,setVisibleMenu] = useState(false)
     const [result, setResult] = useState([])
 
     useEffect(()=>{
         fetchCommands()
+        fetchCondition()
     },[])
 
     const toggleResult = (array) => {

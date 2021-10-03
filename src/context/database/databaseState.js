@@ -2,17 +2,17 @@ import React, {useReducer,useState} from "react";
 import {databaseReducer} from "./databaseReducer";
 import axios from "axios";
 import {DatabaseContext} from "./databaseContext";
-import {ADD_COMM, ADD_VAR, FETCH_COMM, FETCH_VAR, REMOVE_VAR} from "../types";
+import {ADD_COMM, ADD_CONDITION, ADD_VAR, FETCH_COMM, FETCH_CONDITION, FETCH_VAR, REMOVE_VAR} from "../types";
 
 export const DatabaseState = ({children}) => {
     const initialState = {
         variables: [],
-        commands: []
+        commands: [],
+        condition: []
     }
 
     const [state, dispatch] = useReducer(databaseReducer, initialState)
     const [index, setIndex] = useState(0)
-    const [condition, setCondition] = useState([])
 
 
     const addVariable = async (variable) => {
@@ -85,6 +85,20 @@ export const DatabaseState = ({children}) => {
         }
     }
 
+    const addCondition = async (condition) => {
+        console.log(condition)
+        const result = await axios.post('http://localhost:8080/api/cond/add',condition)
+        console.log('dataBaseState. addCondition: ');
+        console.log(result)
+        const payload = Object.keys(result.data).map(key => {
+            return {
+                ...result.data[key],
+                id:result.data.id
+            }
+        })
+        dispatch({type:ADD_CONDITION, payload})
+    }
+
     const fetchCommands = async () => {
         const result = await axios.get('http://localhost:8080/api/com/getAll')
         console.log(result)
@@ -99,6 +113,18 @@ export const DatabaseState = ({children}) => {
         console.log('index fetch_com: '+index)
         dispatch({type: FETCH_COMM, payload})
         setIndex(index+1)
+    }
+
+    const fetchCondition = async () => {
+        const result = await axios.get('http://localhost:8080/api/cond/getAll')
+        const payload = Object.keys(result.data).map(key => {
+            return {
+                ...result.data[key],
+                id:result.data[key].id
+            }
+        })
+        dispatch({type: FETCH_CONDITION, payload})
+
     }
 
     const removeCommands = async id => {
@@ -130,10 +156,6 @@ export const DatabaseState = ({children}) => {
         await axios.get('http://localhost:8080/api/db/deleteAll/')
     }
 
-    const updateCondition = (condition_obj) => {
-        setCondition([...condition, condition_obj])
-    }
-
     return (
         <DatabaseContext.Provider value={{
             addVariable,
@@ -143,11 +165,12 @@ export const DatabaseState = ({children}) => {
             fetchCommands,
             removeVariables,
             removeCommands,
-            updateCondition,
+            addCondition,
             removeAll,
+            fetchCondition,
             variables: state.variables,
             commands: state.commands,
-            condition: condition,
+            condition: state.condition,
             lastIndex: index
         }}
         >

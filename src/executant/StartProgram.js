@@ -3,9 +3,10 @@ import start_btn from "../resources/start.png";
 import {DatabaseContext} from "../context/database/databaseContext";
 import {REQ, ASSIGN, STOP, END, REPORT, CONDITION, CYCLE, ELSE, END_CONDITION, END_CYCLE, REPEAT, THEN, WHEN} from "../context/identTypes"
 import ReactDOM from "react-dom"
+import axios from "axios";
 
 export const StartProgram = ({arr, onChange}) => {
-    const {commands,condition,variables,fetchCommands,lastIndex,updateVariable,fetchVariables,addVariable} = useContext(DatabaseContext)
+    const {commands,condition,variables,fetchCommands,lastIndex,updateVariable,fetchVariables,addVariable,fetchCondition} = useContext(DatabaseContext)
     const array = []
 
     const req = () => {
@@ -13,6 +14,8 @@ export const StartProgram = ({arr, onChange}) => {
         console.log('lastBefore: '+lastIndex)
         fetchCommands()
         fetchVariables()
+        fetchCondition()
+        fetchCondition()
         console.log('lastAfter: '+lastIndex)
         let res
         let isExistsVariable = false
@@ -68,13 +71,20 @@ export const StartProgram = ({arr, onChange}) => {
                 // array.push(commands[item].nameVariable)
             }else if (commands[item].ident===CONDITION){
                 console.log("================condition=============")
-                Object.keys(condition).map(item => {
-                    if (commands[item].name.indexOf(">")!==-1){
-                        if (condition[item].value>condition[item+1].value){
-
+                let first = null
+                Object.keys(condition).filter(cond => condition[cond].command_id = commands[item].id).map(it => {
+                    const second_var = 2
+                    if (it.toString() === '0'){
+                        first = condition[it]
+                    }
+                    if (commands[item].name.indexOf(">")>0 && '1' === it.toString()){
+                        console.log(first);
+                        console.log(condition[it])
+                        if (parseInt(first.value)>parseInt(condition[it].value)){
+                            console.log("fuck")
                         }
                     }
-                    console.log(condition[item].name + ' - '+ condition[item].value)
+
                 })
 
             }

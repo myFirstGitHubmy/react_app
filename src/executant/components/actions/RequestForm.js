@@ -15,13 +15,16 @@ export const RequestForm = () => {
     },[])
 
     const saveVariable = () => {
-        const arr = commands
         let checkRepeatVar = false
-        Object.keys(arr).map(item=> {
-            if (arr[item].nameVariable.toLowerCase() === value.toLowerCase()){
-                checkRepeatVar = true
-            }
-        })
+        if (commands !== null){
+            Object.keys(commands).map(item=> {
+                console.log('request form. Value: '+ value)
+                console.log('request form. nameVariable: '+ commands[item].nameVariable)
+                if (commands[item].nameVariable.toLowerCase() === value.toLowerCase()){
+                    checkRepeatVar = true
+                }
+            })
+        }
         if (checkRepeatVar){
             alert.show('Переменная ' + value + ' уже существует', 'warning')
         }else {
@@ -30,7 +33,7 @@ export const RequestForm = () => {
                     name: 'Запросить ' + value,
                     ident: REQ,
                     status: true,
-                    nameVariable: value,
+                    nameVariable: value.toLowerCase(),
                     valueVariable: null
                 }
                 addCommands(com)
@@ -38,23 +41,8 @@ export const RequestForm = () => {
                 fetchCommands()
                     .then(() => console.log("update commands"))
                 console.log('lastIndex: '+ lastIndex)
-                setValue('')
-                // let lastCom = null
-                // Object.keys(commands).map(item => {
-                //     lastCom = commands[item].id
-                // })
-                // console.log("comm: "+lastCom)
-                // const varObject = {name: value, value: null,commands:lastIndex}
-                // try {
-                //     addVariable(varObject)
-                //         .catch(err => {
-                //             console.log(err.message)
-                //         })
                     alert.show('Переменная ' + value + ' создана', 'success')
                     fetchVariables()
-                // } catch (error) {
-                //     alert.show('Что-то пошло не так', 'danger')
-                // }
             } else {
                 alert.show('Введите название переменной')
             }

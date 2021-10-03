@@ -3,9 +3,8 @@ import {DatabaseContext} from "../../../context/database/databaseContext";
 import iconPlus from '../../../resources/plus.png'
 
 export const ConditionForm = (props) => {
-    const {addCommands,condition, updateCondition, fetchVariables, commands, fetchCommands,lastIndex} = useContext(DatabaseContext)
+    const {addCommands,condition, fetchVariables, commands, fetchCommands,lastIndex,addCondition,fetchCondition} = useContext(DatabaseContext)
     const [value, setValue] = useState('')
-    let pos = 0
 
     const saveCondition = () => {
         const obj_com = {
@@ -14,14 +13,14 @@ export const ConditionForm = (props) => {
         }
         addCommands(obj_com)
         fetchCommands()
+        fetchCondition()
     }
 
     const add_var_condition = (event) => {
         const val = Array.from(event.target.selectedOptions, option => option.value)
         const mas = val[0].split(' ')
-        updateCondition({name: mas[0], value: mas[1], position: pos, id: lastIndex})
+        addCondition({name: mas[0], value: mas[1], command_id: lastIndex+1})
         setValue(value + mas[0])
-        pos++;
         console.log(condition)
     }
 
