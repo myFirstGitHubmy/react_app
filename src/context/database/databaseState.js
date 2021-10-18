@@ -168,6 +168,7 @@ export const DatabaseState = ({children}) => {
             addCondition,
             removeAll,
             fetchCondition,
+            updateStatusCommand,
             variables: state.variables,
             commands: state.commands,
             condition: state.condition,

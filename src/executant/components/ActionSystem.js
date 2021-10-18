@@ -14,7 +14,7 @@ export const ActionSystem = () => {
                     <div><ConditionForm array={variables}/></div>
                     <div>
                         <button type="button" className="btn btn-outline-primary" onClick={() => {
-                            addCommands({name: 'То', ident: 'THEN'})
+                            addCommands({name: 'То', ident: 'THEN',status: true})
                             fetchCommands()
                         }}>
                             То ...
@@ -23,7 +23,7 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-outline-primary" onClick={
                             () => {
-                                addCommands({name: 'Иначе', ident: 'ELSE'})
+                                addCommands({name: 'Иначе', ident: 'ELSE',status: true})
                                 fetchCommands()
                             }}>
                             Иначе ...
@@ -32,7 +32,7 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-outline-primary" onClick={
                             () => {
-                                addCommands({name: 'Конец ветвления', ident: 'END_CONDITION'})
+                                addCommands({name: 'Конец ветвления', ident: 'END_CONDITION',status: true})
                                 fetchCommands()
                             }}>
                             Конец ветвления
@@ -44,7 +44,7 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-primary" onClick={
                             () => {
-                                addCommands({name: 'Цикл', ident: 'CYCLE'})
+                                addCommands({name: 'Цикл', ident: 'CYCLE',status: true})
                                 fetchCommands()
                             }}>
                             Цикл
@@ -77,7 +77,7 @@ export const ActionSystem = () => {
                                         }} data-dismiss="modal">Отмена</button>
                                         <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={
                                             () => {
-                                                addCommands({name: 'Пока '+when, ident: 'WHEN'})
+                                                addCommands({name: 'Пока '+when, ident: 'WHEN',status: true})
                                                 fetchCommands()
                                             }}>Сохранить</button>
                                     </div>
@@ -93,7 +93,7 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-outline-primary" onClick={
                             () => {
-                                addCommands({name: 'Повторять ', ident: 'REPEAT'})
+                                addCommands({name: 'Повторять ', ident: 'REPEAT',status: true})
                                 fetchCommands()
                             }}>
                             Повторять ...
@@ -102,7 +102,7 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-outline-primary" onClick={
                             () => {
-                                addCommands({name: 'Конец цикла', ident: 'END_CYCLE'})
+                                addCommands({name: 'Конец цикла', ident: 'END_CYCLE',status: true})
                                 fetchCommands()
                             }}>
                             Конец цикла

@@ -9,7 +9,8 @@ export const ConditionForm = (props) => {
     const saveCondition = () => {
         const obj_com = {
             name: 'Если '+ value,
-            ident: 'CONDITION'
+            ident: 'CONDITION',
+            status: true
         }
         addCommands(obj_com)
         fetchCommands()

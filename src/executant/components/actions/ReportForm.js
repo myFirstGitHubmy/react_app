@@ -23,14 +23,16 @@ export const ReportForm = () => {
                 name: 'Сообщить '+ value ,
                 ident: REPORT,
                 nameVariable: value,
-                valueVariable: null
+                valueVariable: null,
+                status: true
             }
         }else{
             obj = {
                 name: 'Сообщить '+ selectedOption ,
                 ident: REPORT,
                 nameVariable: selectedOption,
-                valueVariable: valueSelected
+                valueVariable: valueSelected,
+                status: true
             }
         }
         addCommands(obj)
