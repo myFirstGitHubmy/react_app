@@ -20,6 +20,16 @@ export const StartProgram = ({arr, onChange}) => {
         indexCondition = 0
     }
 
+    const updateVar = (id, value) => () => updateVariable({
+            id: id,
+            value: value})
+
+    const addVar = (name, value, command) => addVariable({
+            name: name,
+            value: value,
+            commands: command
+        })
+
     const req = () => {
         console.log('lastBefore: '+lastIndex)
         fetchCommands()
@@ -28,48 +38,41 @@ export const StartProgram = ({arr, onChange}) => {
         let res
         let isExistsVariable = false
         let conditionCheck = null
-
+        let currentVariable = null
         Object.keys(commands).map(item => {
+            console.log('id_commands: '+commands[item].id)
             fetchVariables()
             isExistsVariable = false
-            // поиск переменной в списке переменных
             console.log(variables)
+            // поиск переменной в списке переменных
             if (variables === null){
                 isExistsVariable = true
             }
             Object.keys(variables).map(variable => {
                 if (variables[variable].name === commands[item].nameVariable){
                     isExistsVariable = true
+                    currentVariable = variables[variable]
                 }
             })
             if (commands[item].ident===REQ  && (conditionCheck === null || indexCondition === 1 )){
                res = prompt('Введите значение переменной: '+commands[item].nameVariable)
                 if (isExistsVariable){
-                    updateVariable({
-                        id: commands[item].id,
-                        value: res})
+                    updateVar(currentVariable.commands, res)
+                    console.log('update variable')
+                    setInterval(null,2000)
                     fetchVariables()
                 }else{
-                    addVariable({
-                        name: commands[item].nameVariable,
-                        value: res,
-                        commands: commands[item].id
-                    })
+                    addVar(commands[item].nameVariable, res, commands[item].id)
                 }
                 array.push(commands[item].nameVariable + ' = '+ res)
                 indexToZero()
             }else if (commands[item].ident===ASSIGN   && (conditionCheck === null || indexCondition === 1 )){
                 if (isExistsVariable){
-                    updateVariable({
-                        id: commands[item].id,
-                        value: commands[item].valueVariable})
+                    updateVar(currentVariable.commands, commands[item].valueVariable)
+                    setInterval(null, 1000)
                     fetchVariables()
                 }else{
-                    addVariable({
-                        name: commands[item].nameVariable,
-                        value: commands[item].valueVariable,
-                        commands: commands[item].id
-                    })
+                    addVar(commands[item].nameVariable, commands[item].valueVariable, commands[item].id)
                 }
                 indexToZero()
             }else if (commands[item].ident===REPORT  && (conditionCheck === null || indexCondition === 1)){
@@ -102,6 +105,7 @@ export const StartProgram = ({arr, onChange}) => {
                         console.log('> '+conditionCheck)
                     }else if (commands[item].name.indexOf("<")>0 && '1' === it.toString()){
                         conditionCheck = first < second;
+                        console.log('first: '+first+ ' second: '+second)
                         console.log('<')
                     }else if (commands[item].name.indexOf("=")>0 && '1' === it.toString()){
                         conditionCheck = first === second;
@@ -128,7 +132,6 @@ export const StartProgram = ({arr, onChange}) => {
 
         })
         onChange(array)
-
     }
 
     return (

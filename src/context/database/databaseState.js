@@ -34,7 +34,7 @@ export const DatabaseState = ({children}) => {
 
     const fetchVariables = async () => {
         const variables = await axios.get('http://localhost:8080/api/var/getAll')
-        console.log(variables)
+        //console.log(variables)
         const payload = Object.keys(variables.data).map(key => {
             return {
                 ...variables.data[key],
@@ -44,7 +44,7 @@ export const DatabaseState = ({children}) => {
         dispatch({type: FETCH_VAR, payload})
     }
 
-    const updateVariable = async (variable) => {
+    const updateVariable =async (variable) => {
         const variables = await axios.get('http://localhost:8080/api/var/update?id='+variable.id+'&value='+variable.value)
         console.log(variables)
         const payload = {

@@ -17,7 +17,8 @@ export const RequestForm = () => {
     const saveVariable = () => {
         let checkRepeatVar = false
         if (commands !== null){
-            Object.keys(commands).map(item=> {
+            console.log(commands)
+            Object.keys(commands).filter(com => (commands[com].ident === 'REQ' || commands[com].ident === 'ASSIGN')).map(item=> {
                 console.log('request form. Value: '+ value)
                 console.log('request form. nameVariable: '+ commands[item].nameVariable)
                 if (commands[item].nameVariable.toLowerCase() === value.toLowerCase()){
@@ -25,7 +26,7 @@ export const RequestForm = () => {
                 }
             })
         }
-        if (checkRepeatVar){
+        if (checkRepeatVar === true){
             alert.show('Переменная ' + value + ' уже существует', 'warning')
         }else {
             if (value.trim()) {

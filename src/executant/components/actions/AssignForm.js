@@ -23,7 +23,7 @@ export const AssignForm = () => {
             valueVariable: value
         }
         addCommands(obj)
-        alert.show('Запросить ' + name + 'со значением '+value+' добавлена','success')
+        alert.show('Запросить ' + name + ' со значением '+value+' добавлена','success')
     }
 
     const clear = () => {
