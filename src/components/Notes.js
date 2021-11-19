@@ -37,10 +37,10 @@ import {DatabaseContext} from "../context/database/databaseContext";
 
      let notes = commands
 
-     return (<div className="form-group">
+     return (<div className="form-group notes">
              <div>Начало</div>
-        {Object.keys(notes).map(note => <div key={notes[note].id}>
-            {notes[note].name}
+        {Object.keys(notes).map(note => <div className="note" key={notes[note].id}>
+            <span>{notes[note].name}</span>
             <img alt="delete" src={deleteIcon} className="icon" onClick={() => removeCommands(notes[note].id)}/>
                 </div>)}
     </div>

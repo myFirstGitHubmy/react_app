@@ -2,8 +2,8 @@ import React, {useContext, useState} from "react";
 import {DatabaseContext} from "../../context/database/databaseContext";
 import {ConditionForm} from "./actions/ConditionForm";
 
-export const ActionSystem = () => {
-    const {commands,variables,  fetchCommands, removeVariables, fetchVariables,addCommands} = useContext(DatabaseContext)
+export const ActionSystem = ({conditionChange, setConditionChange}) => {
+    const {variables,  fetchCommands, addCommands} = useContext(DatabaseContext)
     const [when, setWhen] = useState('')
 
     return (
@@ -11,9 +11,9 @@ export const ActionSystem = () => {
             <h3 className=""><span className="badge badge-secondary form-margin-left">Действия</span></h3>
             <div className="div-border form-margin-left">
                 <div className="div-margin-3 align-content-start flex-nowrap d-flex flex-row bd-highlight mb-3">
-                    <div><ConditionForm array={variables}/></div>
+                    <div><ConditionForm array={variables} toggleCondition={setConditionChange}/></div>
                     <div>
-                        <button type="button" className="btn btn-outline-primary" onClick={() => {
+                        <button disabled={conditionChange} type="button" className="btn btn-outline-primary" onClick={() => {
                             addCommands({name: 'То', ident: 'THEN',status: true})
                             fetchCommands()
                         }}>
@@ -21,10 +21,13 @@ export const ActionSystem = () => {
                         </button>
                     </div>
                     <div>
-                        <button type="button" className="btn btn-outline-primary" onClick={
+                        <button disabled={conditionChange} type="button" className="btn btn-outline-primary" onClick={
                             () => {
-                                addCommands({name: 'Иначе', ident: 'ELSE',status: true})
+                                addCommands({name: 'Иначе', ident: 'ELSE', status: true})
                                 fetchCommands()
+                                if (conditionChange===false) {
+                                    setConditionChange()
+                                }
                             }}>
                             Иначе ...
                         </button>
@@ -32,7 +35,10 @@ export const ActionSystem = () => {
                     <div>
                         <button type="button" className="btn btn-outline-primary" onClick={
                             () => {
+                                console.log(conditionChange)
                                 addCommands({name: 'Конец ветвления', ident: 'END_CONDITION',status: true})
+                                setConditionChange()
+                                console.log(conditionChange)
                                 fetchCommands()
                             }}>
                             Конец ветвления

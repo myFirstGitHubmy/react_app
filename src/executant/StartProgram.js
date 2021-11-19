@@ -6,7 +6,7 @@ import ReactDOM from "react-dom"
 import axios from "axios";
 
 export const StartProgram = ({arr, onChange}) => {
-    const {commands,condition,variables,fetchCommands,lastIndex,updateVariable,fetchVariables,addVariable,fetchCondition,updateStatusCommand} = useContext(DatabaseContext)
+    const {commands,condition,variables,fetchCommands,lastIndex,updateVariable,fetchVariables,addVariable,fetchCondition} = useContext(DatabaseContext)
     const array = []
     let indexCondition = 0
 
@@ -59,7 +59,6 @@ export const StartProgram = ({arr, onChange}) => {
                 if (isExistsVariable){
                     updateVar(currentVariable.commands, res)
                     console.log('update variable')
-                    setInterval(null,2000)
                     fetchVariables()
                 }else{
                     addVar(commands[item].nameVariable, res, commands[item].id)
@@ -69,7 +68,6 @@ export const StartProgram = ({arr, onChange}) => {
             }else if (commands[item].ident===ASSIGN   && (conditionCheck === null || indexCondition === 1 )){
                 if (isExistsVariable){
                     updateVar(currentVariable.commands, commands[item].valueVariable)
-                    setInterval(null, 1000)
                     fetchVariables()
                 }else{
                     addVar(commands[item].nameVariable, commands[item].valueVariable, commands[item].id)

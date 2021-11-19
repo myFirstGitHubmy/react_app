@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from "react";
 import {DatabaseContext} from "../../../context/database/databaseContext";
 import ReactDom from 'react-dom'
 import {RequestForm} from "./RequestForm";
-import {REPORT} from "../../../context/identTypes"
+import {ASSIGN, REPORT, REQ} from "../../../context/identTypes"
 
 export const ReportForm = () => {
 
@@ -74,7 +74,10 @@ export const ReportForm = () => {
                                 {radio === false ? <div className="container div-margin-1">
 
                                     <select className="custom-select" onChange={handleChangeReport}>
-                                        {Object.keys(commands).filter(com => commands[com].status === true).map(item =>
+                                        {Object.keys(commands)
+                                            .filter(fil => commands[fil].status === true &&
+                                                (commands[fil].ident === REQ || commands[fil].ident === ASSIGN))
+                                            .map(item =>
                                             <option value={commands[item].nameVariable + ' '+ commands[item].valueVariable} key={item}>
                                                 {
                                                     commands[item].nameVariable

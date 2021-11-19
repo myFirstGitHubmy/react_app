@@ -1,8 +1,9 @@
 import React, {useContext, useState} from "react";
 import {DatabaseContext} from "../../../context/database/databaseContext";
 import iconPlus from '../../../resources/plus.png'
+import {REQ, ASSIGN} from "../../../context/identTypes"
 
-export const ConditionForm = (props) => {
+export const ConditionForm = ({toggleCondition}) => {
     const {addCommands,condition, fetchVariables, commands, fetchCommands,lastIndex,addCondition,fetchCondition} = useContext(DatabaseContext)
     const [value, setValue] = useState('')
 
@@ -15,6 +16,7 @@ export const ConditionForm = (props) => {
         addCommands(obj_com)
         fetchCommands()
         fetchCondition()
+        toggleCondition()
     }
 
     const add_var_condition = (event) => {
@@ -54,10 +56,14 @@ export const ConditionForm = (props) => {
                             </div>
                             <p>Переменные:</p>
                             <select className="custom-select" onChange={add_var_condition}>
-                                {Object.keys(commands).filter(fil => commands[fil].status === true).map(item => <option value={commands[item].nameVariable + ' '+ commands[item].id} key={commands[item].id}>
-                                        {
-                                            commands[item].nameVariable
-                                        }
+                                {Object.keys(commands)
+                                    .filter(fil => commands[fil].status === true &&
+                                        (commands[fil].ident === REQ || commands[fil].ident === ASSIGN))
+                                    .map(item =>
+                                        <option
+                                            value={commands[item].nameVariable + ' '+ commands[item].id}
+                                            key={commands[item].id}>
+                                            {commands[item].nameVariable}
                                     </option>
                                 )}
                             </select>
@@ -68,7 +74,12 @@ export const ConditionForm = (props) => {
                                 setValue('')
                                 fetchCommands()
                             }} data-dismiss="modal">Отмена</button>
-                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={saveCondition}>Сохранить</button>
+                            <button type="button"
+                                    className="btn btn-primary"
+                                    data-dismiss="modal"
+                                    onClick={saveCondition}
+                            >
+                                Сохранить</button>
                         </div>
                     </div>
                 </div>

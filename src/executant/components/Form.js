@@ -15,6 +15,7 @@ export const Form = () => {
     const {fetchCommands, fetchCondition, fetchVariables} = useContext(DatabaseContext)
     const [isVisibleMenu,setVisibleMenu] = useState(false)
     const [result, setResult] = useState([])
+    const [conditionChange, setConditionChange] = useState(true)
 
     useEffect(()=>{
         fetchCommands()
@@ -24,6 +25,11 @@ export const Form = () => {
 
     const toggleResult = (array) => {
         setResult(array)
+    }
+
+    const toggleCondition = () => {
+        console.log("ПОМЕНЯЛОСЬ CONDITION")
+        setConditionChange(!conditionChange)
     }
 
     return (
@@ -43,7 +49,7 @@ export const Form = () => {
                 </div>
                 <div>
                     <ExecutorCommandSystem />
-                    <ActionSystem />
+                    <ActionSystem conditionChange={conditionChange} setConditionChange={toggleCondition}/>
                     <ResultProgram arr={result}/>
                 </div>
 
