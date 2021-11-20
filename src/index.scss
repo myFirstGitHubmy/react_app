@@ -109,6 +109,20 @@ button {
   margin-left: 1rem;
 }
 
+.line-middle {
+  position: relative;
+  top: -20px;
+  left: 10px;
+  border: 2px solid black;
+  width: 0px;
+  height: 85px;
+  -moz-transform: rotate(-30deg);
+  -ms-transform: rotate(-30deg);
+  -webkit-transform: rotate(-30deg);
+  -o-transform: rotate(-30deg);
+  transform: rotate(-45deg);
+}
+
 .aside-margin-left {
   margin-left: -10px;
 }
@@ -140,10 +154,11 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: bold;
 }
 
-.td-border{
-  border: 1px black solid ;
+.box-border{
+  border: 1px gray dotted;
   width: 60px;
   height: 60px;
+  margin: 0px;
 }
 
 .icon-h {
@@ -167,6 +182,58 @@ h1,h2,h3,h4,h5,h6 {
     width: 60px;
     height: 60px;
     margin: 0;
-
 }
+
+.block {
+  background: black;
+  margin: 0px;
+  padding: 20px;
+  position: relative;
+  color: #fff;
+  display: inline-table;
+}
+.block::after {
+  content: '';
+  position: absolute; /* Абсолютное позиционирование */
+  left: 20px; bottom: -20px; /* Положение треугольника */
+  border: 10px solid transparent; /* Прозрачные границы */
+  border-top: 10px solid green; /* Добавляем треугольник */
+}
+
+.right-col{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: auto;
+  width: auto;
+}
+
+// ===== style for angle ==========
+
+//leftUp to rightDown + color
+
+.triangle-45-green{
+  height: 0;
+  width: 0;
+  border-right: 60px solid transparent;
+  border-bottom: 59px solid green;
+  border-left: 0px solid transparent;
+}
+
+.triangle-45-red{
+  height: 0;
+  width: 0;
+  border-right: 60px solid transparent;
+  border-bottom: 59px solid red;
+  border-left: 0px solid transparent;
+}
+
+.triangle-45-yellow{
+  height: 0;
+  width: 0;
+  border-right: 60px solid transparent;
+  border-bottom: 59px solid yellow;
+  border-left: 0px solid transparent;
+}
+
 

@@ -8,8 +8,8 @@ export const functions = () => {
     for (let i = 1; i <= sizeTable; i++){
         const left = i !== 1? i-1 : 1;
         const right = i !== sizeTable? i+1 : sizeTable;
-        const down = i <= 90 ? i+10 : null;
-        const up = i >= 11 ? i-10 : null;
+        const down = i < 90 ? i+10 : null;
+        const up = i >= 10 ? i-10 : null;
 
         const initialStateTable = {
             id: i,
@@ -17,7 +17,8 @@ export const functions = () => {
             left: left,
             right: right,
             down: down,
-            up: up
+            up: up,
+            angle: null
         }
 
         initialTable.push(initialStateTable)

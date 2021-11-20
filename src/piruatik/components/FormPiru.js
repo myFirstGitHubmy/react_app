@@ -8,15 +8,17 @@ import {TableDefault} from "../../executant/components/fieldProgram/TableDefault
 import menuIcon from "../../resources/menu.png"
 import {AsideMenu} from "../../executant/components/AsideMenu"
 import h from "../../resources/h.png"
-import {TableDinamic} from "../../executant/components/fieldProgram/TableDinamic";
+import {TableDinamic} from "../functions/TableDinamic";
 import ell from "../../resources/ellips.png"
 import angle from "../../resources/angle.png"
 import line from "../../resources/line.png"
 import stop from "../../resources/stop.png"
 import color from "../../resources/color.png"
 import {functions} from "../functions/initialTable"
-import {options, NINETEEN, FORTY_FIVE} from "../functions/options";
-
+import {options, NINETY, FORTY_FIVE} from "../handbook/options";
+import {UP, DOWN, LEFT, RIGHT, LEFT_UP, RIGHT_DOWN, RIGHT_UP, LEFT_DOWN} from "../handbook/angles"
+import {LINE_UP, LINE_RIGHT, LINE_DIAGONAL, LINE_DOWN, LINE_LEFT, lines} from "../handbook/lines"
+import {GREEN, RED, YELLOW, Colors} from "../handbook/colors"
 
 
 export const Form = () => {
@@ -25,19 +27,40 @@ export const Form = () => {
     const alert = useContext(AlertContext)
     const [isVisibleMenu,setVisibleMenu] = useState(false)
     const [currentPlace, setCurrentPlace] = useState(1)
-    const [operation,setOperation] = useState('')
-    const [route, setRoute] = useState(1)
+    const [color,setColor] = useState(null)
+    const [route, setRoute] = useState(RIGHT)
     const [array, setArray] = useState(functions)
-    const [ellips, setEllips] = useState(false)
+    const [ellipse, setEllipse] = useState(false)
     const [option, setOption] = useState(options)
+    const [line, setLine] = useState(null)
 
     const handlePaint = event => {
         const color = Array.from(event.target.selectedOptions,option => option.value)
-        setOperation(color[0])
-        handleArray(color[0])
+        setColor(color[0])
+        handleArrayColor(color[0])
     }
 
-    const handleArray = (color) => {
+    const handleArrayLine = (line) => {
+        const newArray = array
+        for (let item of array){
+            if (item.id === currentPlace){
+                item.angle = line
+            }
+        }
+        setArray(newArray)
+    }
+
+    const handleArray = (...arg) => {
+        const newArray = array
+        for (let item of array){
+            if (item.id === currentPlace){
+                item = arg
+            }
+        }
+        setArray(newArray)
+    }
+
+    const handleArrayColor = (color) => {
         const newArray = array
         for (let item of array){
             if (item.id === currentPlace){
@@ -64,7 +87,7 @@ export const Form = () => {
                                 <TableDefault/>
                             </div>
                             <div>
-                                <TableDinamic id={currentPlace} ell={ellips} operation={operation} arrayList={array} handleArray={handleArray}/>
+                                <TableDinamic id={currentPlace} line={line} operation={color} arrayList={array} handleArray={handleArray}/>
                             </div>
                         </div>
 
@@ -77,17 +100,10 @@ export const Form = () => {
                                 <button type="button" className="btn btn-outline-primary" onClick={
                                     () => {
                                         setCurrentPlace(currentPlace+route)
-                                        setOperation('')
-                                        console.log(currentPlace)
-                                    }}>
-                                   Шаг <img className="icon-h" src={h} alt=""/>
+                                        setColor(null)
+                                    }}>Шаг<img className="icon-h" src={h} alt=""/>
                                 </button>
 
-                            </div>
-                            <div>
-                                <button type="button" className="btn btn-outline-primary">
-                                    Отрезок <img className="icon-h" src={line} alt=""/>
-                                </button>
                             </div>
                             <div>
                                 <button type="button" className="btn btn-outline-primary">
@@ -117,13 +133,13 @@ export const Form = () => {
                                                 <p>Выберите нужный угол поворота</p>
                                                 <select id="selectorAngle" className="custom-select" onChange={event => {
                                                     const sel = Array.from(event.target.selectedOptions, option => option.value)
-                                                    if (sel[0] === NINETEEN){
-                                                        const position = array.filter(i => i.id === currentPlace).map(item => item.down)
-                                                        setCurrentPlace(position[0]-1)
 
-                                                    }else{
-                                                        setCurrentPlace(currentPlace+10)
-                                                        console.log(currentPlace)
+                                                    if (sel[0] === NINETY){
+                                                        setRoute(DOWN)
+                                                        // const position = array.filter(i => i.id === currentPlace).map(item => item.down)
+                                                        // setCurrentPlace(position[0]-1)
+                                                    }else if (sel[0] === FORTY_FIVE){
+                                                        setRoute(RIGHT_DOWN)
                                                     }
                                                 }
                                                 }>
@@ -142,6 +158,60 @@ export const Form = () => {
                                 </div>
 
                             </div>
+
+                            <div>
+                                <button type="button" className="btn btn-outline-primary"
+                                        data-toggle="modal" data-target="#exampleModalLine">
+                                    Отрезок <img className="icon-h" src={angle} alt=""/>
+                                </button>
+
+                                <div className="modal fade" id="exampleModalLine" tabIndex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div className="modal-dialog" role="document">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title">Угол</h5>
+                                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div className="container">
+
+                                                <div className="modal-body">
+                                                </div>
+                                                <p>Выберите нужное действие</p>
+                                                <form id="selectLines" action="">
+                                                    <select id="selectorLine" className="custom-select" onChange={event => {
+                                                        const sel = Array.from(event.target.selectedOptions, option => option.value)[0]
+                                                        console.log(lines)
+                                                        lines
+                                                            .filter(lin => sel===lin.value)
+                                                            .map(obj => setLine(obj.value))
+                                                        setLine(sel)
+                                                        handleArrayLine(sel)
+                                                    }
+                                                    }>
+                                                        {lines.map(op =>
+                                                            <option selected={op.selected} style={op.style} value={op.value}>
+                                                                {op.label}
+                                                            </option>)
+                                                        }
+                                                    </select>
+                                                </form>
+
+                                            </div>
+
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                                <button type="button" className="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
                             <div>
                                 <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#examplePaint">
                                     Закрась <img className="icon-h" src={color} alt=""/>
@@ -159,10 +229,7 @@ export const Form = () => {
                                             <div className="container">
                                                 <div className="modal-body">
                                                     <select onChange={e => handlePaint(e)}>
-                                                        <option selected value=""> </option>
-                                                        <option value="red">Красный</option>
-                                                        <option value="green">Зеленый</option>
-                                                        <option value="yellow">Желтый</option>
+                                                        {Colors.map(col => <option selected={col.selected} value={col.value}>{col.label}</option>)}
                                                     </select>
                                                 </div>
                                             </div>
