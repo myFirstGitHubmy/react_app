@@ -4,9 +4,10 @@ export const GREEN = 'green'
 
 export const Colors = [
     {
-        label:null,
+        label:'Выберите цвет',
         value: null,
-        selected: true
+        selected: true,
+        hidden: true
     },
     {
         label:'Красный',

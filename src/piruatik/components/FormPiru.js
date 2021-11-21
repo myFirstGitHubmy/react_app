@@ -132,19 +132,19 @@ export const Form = () => {
                                                 </div>
                                                 <p>Выберите нужный угол поворота</p>
                                                 <select id="selectorAngle" className="custom-select" onChange={event => {
-                                                    const sel = Array.from(event.target.selectedOptions, option => option.value)
+                                                    const sel = Array.from(event.target.selectedOptions, option => option.value)[0]
 
-                                                    if (sel[0] === NINETY){
+                                                    if (sel === NINETY){
                                                         setRoute(DOWN)
                                                         // const position = array.filter(i => i.id === currentPlace).map(item => item.down)
                                                         // setCurrentPlace(position[0]-1)
-                                                    }else if (sel[0] === FORTY_FIVE){
+                                                    }else if (sel === FORTY_FIVE){
                                                         setRoute(RIGHT_DOWN)
                                                     }
                                                 }
                                                 }>
                                                     {option.map(op =>
-                                                    <option selected={op.selected} value={op.value}>{op.label}</option>)
+                                                    <option selected={op.selected} hidden={op.hidden} value={op.value}>{op.label}</option>)
                                                     }
                                                 </select>
                                             </div>
@@ -170,7 +170,7 @@ export const Form = () => {
                                     <div className="modal-dialog" role="document">
                                         <div className="modal-content">
                                             <div className="modal-header">
-                                                <h5 className="modal-title">Угол</h5>
+                                                <h5 className="modal-title"></h5>
                                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -192,7 +192,7 @@ export const Form = () => {
                                                     }
                                                     }>
                                                         {lines.map(op =>
-                                                            <option selected={op.selected} style={op.style} value={op.value}>
+                                                            <option selected={op.selected} hidden={op.hidden} style={op.style} value={op.value}>
                                                                 {op.label}
                                                             </option>)
                                                         }
@@ -228,8 +228,8 @@ export const Form = () => {
                                             </div>
                                             <div className="container">
                                                 <div className="modal-body">
-                                                    <select onChange={e => handlePaint(e)}>
-                                                        {Colors.map(col => <option selected={col.selected} value={col.value}>{col.label}</option>)}
+                                                    <select className="custom-select" onChange={e => handlePaint(e)}>
+                                                        {Colors.map(col => <option hidden={col.hidden} selected={col.selected} value={col.value}>{col.label}</option>)}
                                                     </select>
                                                 </div>
                                             </div>

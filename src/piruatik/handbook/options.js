@@ -4,18 +4,19 @@ export const FORTY_FIVE = '45';
 
 export const options = [
     {
-        label: '',
+        label: 'Выберите действие',
         value: 0,
-        selected: true
+        selected: true,
+        hidden: true
     },
     {
         label: FORTY_FIVE,
         value: 45,
-        selected: null
+        selected: false
     },
     {
         label: NINETY,
         value: 90,
-        selected: null
+        selected: false
     }
 ];

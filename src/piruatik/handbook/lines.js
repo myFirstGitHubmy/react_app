@@ -9,7 +9,8 @@ export const lines = [
         label: 'Выберите действие',
         value: LINE_DIAGONAL,
         selected: true,
-        style: {color: 'red'}
+        style: null,
+        hidden: true
     },
     {
         label: 'Линия по диагонали',
