@@ -31,10 +31,13 @@ code {
 
 }
 
-
 .item {
   display: flex;
   justify-content: space-between;
+}
+
+.icon-ellipse{
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Ellipse_black.svg/1200px-Ellipse_black.svg.png");
 }
 
 .icon{
@@ -45,12 +48,21 @@ code {
   border-radius: 1rem;
 }
 
-.div-border {
+.div-border-ex {
   border-radius: 1.5rem;
   border: 1px solid black;
   margin: 1rem;
   height: auto;
-  width: 800px;
+  width: auto;
+  text-align: center;
+}
+
+.div-border {
+  border-radius: 1.5rem;
+  border: 1px solid black;
+  margin: 1rem;
+  height: 500px;
+  width: auto;
   text-align: center;
 }
 
@@ -154,28 +166,21 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: bold;
 }
 
+.border_gray{border: 1px gray dotted;}
+
 .box-border{
-  border: 1px gray dotted;
   width: 60px;
   height: 60px;
   margin: 0px;
 }
 
+.border_red_current{
+  border: 1px dashed red;
+}
+
 .icon-h {
   width: 30px;
   height: 30px;
-}
-
-.red{
-  background-color: red;
-}
-
-.green{
-  background-color: green;
-}
-
-.yellow{
-  background-color: yellow;
 }
 
 .td-img{
@@ -192,6 +197,7 @@ h1,h2,h3,h4,h5,h6 {
   color: #fff;
   display: inline-table;
 }
+
 .block::after {
   content: '';
   position: absolute; /* Абсолютное позиционирование */
@@ -200,7 +206,12 @@ h1,h2,h3,h4,h5,h6 {
   border-top: 10px solid green; /* Добавляем треугольник */
 }
 
-.right-col{
+hr {
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+li{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -208,11 +219,163 @@ h1,h2,h3,h4,h5,h6 {
   width: auto;
 }
 
+.right-col{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
+  width: auto;
+}
+
+.right-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: auto;
+  width: auto;
+}
+
+.cross_close{
+  width: 10px;
+  height: 10px;
+  display: flow;
+  border: none;
+  background: none;
+}
+
 // ===== style for angle ==========
 
 //leftUp to rightDown + color
 
-.triangle-45-green{
+// color angle 45 и 225
+
+
+.hr-45, .hr-225{
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  width: 81px;
+  margin-left: -12px;
+  margin-top: 27px;
+}
+
+.hr-315, .hr-135{
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  width: 81px;
+  margin-left: -12px;
+  margin-top: 27px;
+}
+
+.hr-color{
+  margin-left: -72px;
+}
+
+.hr{
+
+}
+
+.hr-90{
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  margin-left: -1px;
+  width: 59px;
+  margin-top: 59px;
+}
+
+.hr-270 {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  margin-left: -1px;
+  width: 59px;
+  margin-top: 0;
+}
+
+.hr-180 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  margin-left: -30px;
+  width: 58px;
+  margin-top: 28px;
+}
+
+.hr-0 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  margin-left: 30px;
+  width: 58px;
+  margin-top: 28px;
+}
+
+.ellipse{
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+//=================================================  Зависимость от цвета =================================================
+
+.ellipse-green{
+  border-radius: 50%;
+  border: 1px solid black;
+  background: green;
+}
+
+.ellipse-red{
+  border-radius: 50%;
+  border: 1px solid black;
+  background: red;
+}
+
+.ellipse-yellow{
+  border-radius: 50%;
+  border: 1px solid black;
+  background: yellow;
+}
+
+.ellipse-pink{
+  border-radius: 50%;
+  border: 1px solid black;
+  background: #d271f5;
+}
+
+.ellipse-blue{
+  border-radius: 50%;
+  border: 1px solid black;
+  background: #3c2deb;
+}
+
+.blue{
+  background-color: #3c2deb;
+}
+
+.red{
+  background-color: red;
+}
+
+.green{
+  background-color: green;
+}
+
+.yellow{
+  background-color: yellow;
+}
+
+.pink{
+  background-color: #d271f5;
+}
+
+.triangle-45-green, .triangle-225-green{
   height: 0;
   width: 0;
   border-right: 60px solid transparent;
@@ -220,7 +383,23 @@ h1,h2,h3,h4,h5,h6 {
   border-left: 0px solid transparent;
 }
 
-.triangle-45-red{
+.triangle-45-blue, .triangle-225-blue{
+  height: 0;
+  width: 0;
+  border-right: 60px solid transparent;
+  border-bottom: 59px solid #3c2deb;
+  border-left: 0px solid transparent;
+}
+
+.triangle-45-pink, .triangle-225-pink{
+  height: 0;
+  width: 0;
+  border-right: 60px solid transparent;
+  border-bottom: 59px solid #d271f5;
+  border-left: 0px solid transparent;
+}
+
+.triangle-45-red, .triangle-225-red{
   height: 0;
   width: 0;
   border-right: 60px solid transparent;
@@ -228,12 +407,56 @@ h1,h2,h3,h4,h5,h6 {
   border-left: 0px solid transparent;
 }
 
-.triangle-45-yellow{
+.triangle-45-yellow, .triangle-225-yellow{
   height: 0;
   width: 0;
   border-right: 60px solid transparent;
   border-bottom: 59px solid yellow;
   border-left: 0px solid transparent;
 }
+
+// color angle 135 315
+
+.triangle-135-green, .triangle-315-green{
+  height: 0;
+  width: 0;
+  border-left: 60px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 60px solid green;
+}
+
+.triangle-135-blue, .triangle-315-blue{
+  height: 0;
+  width: 0;
+  border-left: 60px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 60px solid #3c2deb;
+}
+
+
+.triangle-135-pink, .triangle-315-pink{
+  height: 0;
+  width: 0;
+  border-left: 60px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 60px solid #d271f5;
+}
+
+.triangle-135-red, .triangle-315-red{
+  height: 0;
+  width: 0;
+  border-right: 0 solid transparent;
+  border-bottom: 60px solid red;
+  border-left: 60px solid transparent;
+}
+
+.triangle-135-yellow, .triangle-315-yellow{
+  height: 0;
+  width: 0;
+  border-right: 0 solid transparent;
+  border-bottom: 60px solid yellow;
+  border-left: 60px solid transparent;
+}
+
 
 

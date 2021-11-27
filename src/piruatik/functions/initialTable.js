@@ -18,7 +18,9 @@ export const functions = () => {
             right: right,
             down: down,
             up: up,
-            angle: null
+            line: null,
+            angle: null,
+            ellipse: false
         }
 
         initialTable.push(initialStateTable)

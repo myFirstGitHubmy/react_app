@@ -9,20 +9,20 @@ export const Navbar = () => (
 
             <ul className="navbar-nav row d-flex flex-row container-lg">
                 <li className="nav-item">
-                    <NavLink
-                        className="nav-link"
-                        to="/"
-                        exact
-                    >
-                        Главная
-                    </NavLink>
-                    <NavLink
-                        className="nav-link"
-                        to="/pir"
+                        <NavLink
+                            className="nav-link"
+                            to="/"
+                            exact
+                        >
+                            Главная
+                        </NavLink>
+                        <NavLink
+                            className="nav-link"
+                            to="/pir"
 
-                    >
-                        Пируэтик
-                    </NavLink>
+                        >
+                            Пируэтик
+                        </NavLink>
                 </li>
             </ul>
         </nav>

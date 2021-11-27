@@ -17,7 +17,7 @@ export const ExecutorCommandSystem = () => {
                 <Alert />
             </div>
 
-            <div className="form-group div-border form-margin-left">
+            <div className="form-group div-border-ex form-margin-left">
                 <div className="div-margin-3 align-content-start flex-nowrap d-flex flex-row bd-highlight mb-3">
                     <RequestForm/>
                     <AssignForm />

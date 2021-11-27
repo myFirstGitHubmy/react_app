@@ -6,7 +6,7 @@ export const TableDefault = () => {
         (array.map(itemTr =>
                 <tr className="td-border">
                     {array.map(item =>
-                        <td id={item.id+((itemTr.id-1)*10)} className="td-border">
+                        <td id={item.id+((itemTr.id-1)*10)} className="td-border" key={(item.id+((itemTr.id-1)*10)).toString()}>
 
                         </td>
                     )}

@@ -9,7 +9,7 @@ export const ActionSystem = ({conditionChange, setConditionChange}) => {
     return (
         <div>
             <h3 className=""><span className="badge badge-secondary form-margin-left">Действия</span></h3>
-            <div className="div-border form-margin-left">
+            <div className="div-border-ex form-margin-left">
                 <div className="div-margin-3 align-content-start flex-nowrap d-flex flex-row bd-highlight mb-3">
                     <div><ConditionForm array={variables} toggleCondition={setConditionChange}/></div>
                     <div>

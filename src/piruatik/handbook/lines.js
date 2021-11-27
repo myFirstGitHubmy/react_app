@@ -7,7 +7,7 @@ export const LINE_UP = 'LINE_UP'
 export const lines = [
     {
         label: 'Выберите действие',
-        value: LINE_DIAGONAL,
+        value: null,
         selected: true,
         style: null,
         hidden: true
